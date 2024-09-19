@@ -1,7 +1,5 @@
-import { AuthScreen } from "@/features/auth/components/auth-screen";
-
 const HomePage = () => {
-	return (
+  return (
     <main className="flex h-full items-center justify-center bg-[#5C3B58]">
       Main Page
     </main>
