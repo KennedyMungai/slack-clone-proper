@@ -23,6 +23,10 @@ const SignUpCard = ({ setState }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  
+  const handleProviderSignIn = (value: "google" | "github") => {
+    signIn(value);
+  };
 
   return (
     <Card className="h-full w-full p-8">
@@ -76,7 +80,7 @@ const SignUpCard = ({ setState }: Props) => {
           </Button>
           <Button
             disabled={false}
-            onClick={() => {}}
+            onClick={() => handleProviderSignIn("github")}
             variant={"outline"}
             size={"lg"}
             className="relative w-full"

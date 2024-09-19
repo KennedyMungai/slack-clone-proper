@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { SignInFlow } from "@/features/auth/types";
+import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -22,6 +23,12 @@ type Props = {
 const SignInCard = ({ setState }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { signIn } = useAuthActions();
+
+  const handleProviderSignIn = (value: "google" | "github") => {
+    signIn(value);
+  };
 
   return (
     <Card className="h-full w-full p-8">
@@ -67,7 +74,7 @@ const SignInCard = ({ setState }: Props) => {
           </Button>
           <Button
             disabled={false}
-            onClick={() => {}}
+            onClick={() => handleProviderSignIn("github")}
             variant={"outline"}
             size={"lg"}
             className="relative w-full"
