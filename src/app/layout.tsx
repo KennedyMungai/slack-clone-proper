@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ConvexClientProvider } from "@/providers/convex-client-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,11 +15,11 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-	title: {
-		template: "%s | Slack Clone",
-		default: "Slack Clone",
-	},
-	description: "A communication app inspired by Slack",
+  title: {
+    template: "%s | Slack Clone",
+    default: "Slack Clone",
+  },
+  description: "A communication app inspired by Slack",
 };
 
 export default function RootLayout({
@@ -31,7 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
     </html>
   );
