@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { SignInFlow } from "@/features/auth/types";
+import { useAuthActions } from "@convex-dev/auth/react";
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -23,7 +24,9 @@ const SignUpCard = ({ setState }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  
+
+  const { signIn } = useAuthActions();
+
   const handleProviderSignIn = (value: "google" | "github") => {
     signIn(value);
   };
