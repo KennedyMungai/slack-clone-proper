@@ -91,7 +91,7 @@ const SignUpCard = ({ setState }: Props) => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
-            type="Confirm Password"
+            type="password"
             required
           />
           <Button type="submit" className="w-full" size="lg" disabled={pending}>
