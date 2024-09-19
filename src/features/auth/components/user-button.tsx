@@ -30,8 +30,8 @@ const UserButton = () => {
       <DropdownMenuTrigger className="relative outline-none">
         <Avatar className="size-6 transition hover:opacity-75">
           <AvatarImage src={image} alt={name} className="" />
-          <AvatarFallback className="size-10 text-xl text-black">
-            <span className="text-black">{name!.charAt(0).toUpperCase()}</span>
+          <AvatarFallback className="size-6 text-xl text-black">
+            {name!.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
