@@ -22,6 +22,7 @@ type Props = {
 };
 
 const SignUpCard = ({ setState }: Props) => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -47,7 +48,7 @@ const SignUpCard = ({ setState }: Props) => {
     }
 
     setPending(true);
-    signIn("password", { email, password, flow: "signUp" })
+    signIn("password", { name, email, password, flow: "signUp" })
       .catch(() => {
         setError("Invalid email or password");
       })
@@ -70,6 +71,14 @@ const SignUpCard = ({ setState }: Props) => {
       )}
       <CardContent className="space-y-5 px-0 pb-0">
         <form className="space-y-2.5" onSubmit={onPasswordSignIn}>
+          <Input
+            disabled={pending}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Full Name"
+            type="string"
+            required
+          />
           <Input
             disabled={pending}
             value={email}
