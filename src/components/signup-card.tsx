@@ -25,10 +25,13 @@ const SignUpCard = ({ setState }: Props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [pending, setPending] = useState(false);
+
   const { signIn } = useAuthActions();
 
   const onProviderSignIn = (value: "google" | "github") => {
-    signIn(value);
+    setPending(true);
+    signIn(value).finally(() => setPending(false));
   };
 
   return (
@@ -42,7 +45,7 @@ const SignUpCard = ({ setState }: Props) => {
       <CardContent className="space-y-5 px-0 pb-0">
         <form className="space-y-2.5">
           <Input
-            disabled={false}
+            disabled={pending}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
@@ -50,7 +53,7 @@ const SignUpCard = ({ setState }: Props) => {
             required
           />
           <Input
-            disabled={false}
+            disabled={pending}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
@@ -58,21 +61,21 @@ const SignUpCard = ({ setState }: Props) => {
             required
           />
           <Input
-            disabled={false}
+            disabled={pending}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm Password"
             type="Confirm Password"
             required
           />
-          <Button type="submit" className="w-full" size="lg" disabled={false}>
+          <Button type="submit" className="w-full" size="lg" disabled={pending}>
             Continue
           </Button>
         </form>
         <Separator />
         <div className="flex flex-col gap-y-2.5">
           <Button
-            disabled={false}
+            disabled={pending}
             onClick={() => onProviderSignIn("google")}
             variant={"outline"}
             size={"lg"}
@@ -82,7 +85,7 @@ const SignUpCard = ({ setState }: Props) => {
             Continue with Google
           </Button>
           <Button
-            disabled={false}
+            disabled={pending}
             onClick={() => onProviderSignIn("github")}
             variant={"outline"}
             size={"lg"}
