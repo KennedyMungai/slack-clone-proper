@@ -9,7 +9,8 @@
 			"Nextjs",
 			"signin",
 			"signup",
-			"tailwindcss"
+			"tailwindcss",
+			"trpc"
 		]
 	}
 }
