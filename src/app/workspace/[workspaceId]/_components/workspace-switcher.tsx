@@ -45,10 +45,10 @@ const WorkspaceSwitcher = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent side="bottom" align="start" className="w-64">
         <DropdownMenuItem
-          className="cursor-pointer flex-col items-start justify-start break-words capitalize"
+          className="cursor-pointer flex-col items-start justify-start capitalize"
           onClick={() => router.push(`/workspace/${workspaceId}`)}
         >
-          {workspace?.name}
+          <p className="truncate">{workspace?.name}</p>
           <span className="text-xs text-muted-foreground">
             Active Workspace
           </span>
@@ -57,9 +57,9 @@ const WorkspaceSwitcher = () => {
           <DropdownMenuItem
             key={workspace._id}
             onClick={() => router.push(`/workspace/${workspace._id}`)}
-            className="cursor-pointer break-words p-2 capitalize"
+            className="cursor-pointer p-2 capitalize"
           >
-            {workspace.name}
+            <p className="truncate">{workspace.name}</p>
           </DropdownMenuItem>
         ))}
         <DropdownMenuItem
