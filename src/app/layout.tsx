@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import ModalProvider from "@/providers/modal-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,7 +38,14 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ConvexClientProvider>
-            {children}
+            <ThemeProvider
+              enableSystem
+              defaultTheme="system"
+              attribute="class"
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
             <Toaster richColors />
             <ModalProvider />
           </ConvexClientProvider>
