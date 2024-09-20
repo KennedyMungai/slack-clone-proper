@@ -91,5 +91,7 @@ export const update = mutation({
     if (!userId) throw new Error("Unauthorized");
 
     await ctx.db.patch(args.id, { name: args.name });
+
+    return args.id;
   },
 });
