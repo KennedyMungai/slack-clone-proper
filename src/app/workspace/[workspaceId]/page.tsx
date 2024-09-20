@@ -1,10 +1,10 @@
-type Props = {
-  params: {
-    workspaceId: string;
-  };
-};
+"use client";
 
-const Workspace = ({ params: { workspaceId } }: Props) => {
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+
+const Workspace = () => {
+  const workspaceId = useWorkspaceId();
+
   return <div>{workspaceId}</div>;
 };
 
