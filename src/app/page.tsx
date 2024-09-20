@@ -18,7 +18,7 @@ const HomePage = () => {
   useEffect(() => {
     if (isLoading) return;
 
-    if (workspaceId) router.push(`/workspace/${workspaceId}`);
+    if (workspaceId) router.replace(`/workspace/${workspaceId}`);
     else if (!open) setOpen(true);
   }, [isLoading, workspaceId, open, setOpen, router]);
 
