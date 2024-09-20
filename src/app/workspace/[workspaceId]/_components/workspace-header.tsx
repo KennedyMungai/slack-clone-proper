@@ -20,7 +20,7 @@ type Props = {
 };
 
 const WorkspaceHeader = ({ workspace, isAdmin }: Props) => {
-  const [open, setOpen] = useState(false);
+  const [preferencesOpen, setPreferencesOpen] = useState(false);
 
   return (
     <>
@@ -61,7 +61,7 @@ const WorkspaceHeader = ({ workspace, isAdmin }: Props) => {
             {isAdmin && (
               <DropdownMenuItem
                 className="cursor-pointer py-2"
-                onClick={() => setOpen(true)}
+                onClick={() => setPreferencesOpen(true)}
               >
                 Preferences
               </DropdownMenuItem>
@@ -90,8 +90,8 @@ const WorkspaceHeader = ({ workspace, isAdmin }: Props) => {
         </div>
       </div>
       <PreferencesModal
-        open={open}
-        setOpen={setOpen}
+        open={preferencesOpen}
+        setOpen={setPreferencesOpen}
         initialValue={workspace.name}
       />
     </>
