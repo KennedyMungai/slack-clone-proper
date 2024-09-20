@@ -22,11 +22,7 @@ const HomePage = () => {
     else if (!open) setOpen(true);
   }, [isLoading, workspaceId, open, setOpen, router]);
 
-  return (
-    <main className="h-full">
-      <UserButton />
-    </main>
-  );
+  return <main className="h-full"></main>;
 };
 
 export default HomePage;
