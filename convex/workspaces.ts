@@ -79,3 +79,17 @@ export const getById = query({
     return await ctx.db.get(args.id);
   },
 });
+
+export const update = mutation({
+  args: {
+    id: v.id("workspaces"),
+    name: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await auth.getUserId(ctx);
+
+    if (!userId) throw new Error("Unauthorized");
+
+    await ctx.db.patch(args.id, { name: args.name });
+  },
+});
