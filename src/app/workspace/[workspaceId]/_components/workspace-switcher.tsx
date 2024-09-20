@@ -67,7 +67,7 @@ const WorkspaceSwitcher = () => {
           onClick={() => setOpen(true)}
         >
           <div className="relative mr-2 flex size-9 items-center justify-center overflow-hidden rounded-md text-xl font-semibold text-slate-800">
-            <PlusCircleIcon className="mr-2 size-5" />
+            <PlusCircleIcon className="mr-2 size-5 dark:text-white" />
           </div>
           Create a new workspace
         </DropdownMenuItem>
