@@ -12,6 +12,7 @@ import { useCreateWorkspace } from "@/features/workspaces/api/use-create-workspa
 import { useCreateWorkspaceModal } from "@/features/workspaces/store/use-create-workspace-modal";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import { toast } from "sonner";
 
 const CreateWorkspaceModal = () => {
   const [open, setOpen] = useCreateWorkspaceModal();
@@ -37,6 +38,11 @@ const CreateWorkspaceModal = () => {
         onSuccess: (id) => {
           router.push(`/workspaces/${id}`);
           handleClose();
+
+          toast.success("Workspace Created");
+        },
+        onError: (error) => {
+          toast.error(error.message);
         },
       },
     );
