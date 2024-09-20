@@ -4,8 +4,9 @@ import { auth } from "./auth";
 
 const generateCode = () =>
   Array.from(
-    { length: 6 },
-    () => "0123456789abcdefghijklmnopqrstuvwxyz"[Math.random() * 36],
+    { length: 9 },
+    () =>
+      "0123456789abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 36)],
   ).join("");
 
 export const create = mutation({
