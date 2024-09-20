@@ -31,7 +31,15 @@ const CreateWorkspaceModal = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    mutate({ name }, { onSuccess: (id) => router.push(`/workspaces/${id}`) });
+    mutate(
+      { name },
+      {
+        onSuccess: (id) => {
+          router.push(`/workspaces/${id}`);
+          handleClose();
+        },
+      },
+    );
   };
 
   return (
