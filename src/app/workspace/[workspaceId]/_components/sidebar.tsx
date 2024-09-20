@@ -1,3 +1,5 @@
+"use client";
+
 import { ModeToggle } from "@/components/mode-toggle";
 import UserButton from "@/features/auth/components/user-button";
 import {
