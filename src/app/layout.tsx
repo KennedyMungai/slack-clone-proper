@@ -6,6 +6,7 @@ import "./globals.css";
 import ModalProvider from "@/providers/modal-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
+import JotaiProvider from "@/providers/jotai-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,16 +39,18 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ConvexClientProvider>
-            <ThemeProvider
-              enableSystem
-              defaultTheme="system"
-              attribute="class"
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-            <Toaster richColors />
-            <ModalProvider />
+            <JotaiProvider>
+              <ThemeProvider
+                enableSystem
+                defaultTheme="system"
+                attribute="class"
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+              <Toaster richColors />
+              <ModalProvider />
+            </JotaiProvider>
           </ConvexClientProvider>
         </body>
       </html>
