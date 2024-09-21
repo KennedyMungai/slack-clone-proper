@@ -28,8 +28,8 @@ const WorkspaceSection = ({ children, hint, label, onNew }: Props) => {
         >
           <FaCaretDown
             className={cn(
-              "size-4 transition-all",
-              !on && "rotate-180 transition-all",
+              "size-4 transition-transform",
+              !on && "-rotate-90 transition-transform",
             )}
           />
         </Button>
