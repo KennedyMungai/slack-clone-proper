@@ -1,5 +1,6 @@
 "use client";
 
+import Hint from "@/components/hint";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,11 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Doc } from "../../../../../convex/_generated/dataModel";
 import { ChevronDownIcon, ListFilterIcon, SquarePenIcon } from "lucide-react";
-import Hint from "@/components/hint";
-import PreferencesModal from "./preferences-modal";
 import { useState } from "react";
+import { Doc } from "../../../../../convex/_generated/dataModel";
+import PreferencesModal from "./preferences-modal";
 
 type Props = {
   workspace: Doc<"workspaces">;
