@@ -53,7 +53,7 @@ const WorkspaceSection = ({ children, hint, label, onNew }: Props) => {
           </Hint>
         )}
       </div>
-      {on && children}
+      <div className="mx-4">{on && children}</div>
     </div>
   );
 };
