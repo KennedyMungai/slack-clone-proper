@@ -9,7 +9,7 @@ import Link from "next/link";
 import { IconType } from "react-icons/lib";
 
 const sidebarItemVariants = cva(
-  "flex items-center gap-1.5 justify-center font-normal h-7 px-[18px] text-sm overflow-hidden",
+  "flex items-center gap-1.5 justify-start font-normal h-7 px-[18px] text-sm overflow-hidden py-6",
   {
     variants: {
       variant: {
