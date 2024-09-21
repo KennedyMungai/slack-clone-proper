@@ -14,6 +14,7 @@ import SidebarItem from "./sidebar-item";
 import WorkspaceHeader from "./workspace-header";
 import { useGetChannels } from "@/features/channels/api/use-get-channels";
 import { Separator } from "@/components/ui/separator";
+import WorkspaceSection from "./workspace-section";
 
 const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId();
@@ -63,14 +64,16 @@ const WorkspaceSidebar = () => {
           id="drafts"
         />
         <Separator className="my-2 bg-accent/20" />
-        {channels?.map((channelItem) => (
-          <SidebarItem
-            key={channelItem._id}
-            label={channelItem.name}
-            icon={HashIcon}
-            id={channelItem._id}
-          />
-        ))}
+        <WorkspaceSection label="Channels" hint="New channel" onNew={() => {}}>
+          {channels?.map((channelItem) => (
+            <SidebarItem
+              key={channelItem._id}
+              label={channelItem.name}
+              icon={HashIcon}
+              id={channelItem._id}
+            />
+          ))}
+        </WorkspaceSection>
       </div>
     </div>
   );
