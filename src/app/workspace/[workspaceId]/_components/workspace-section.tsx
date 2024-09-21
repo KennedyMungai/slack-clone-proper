@@ -1,8 +1,12 @@
+"use client";
+
 import Hint from "@/components/hint";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { PlusCircleIcon } from "lucide-react";
 import { ReactNode } from "react";
 import { FaCaretDown } from "react-icons/fa";
+import { useToggle } from "react-use";
 
 type Props = {
   children: ReactNode;
@@ -12,14 +16,17 @@ type Props = {
 };
 
 const WorkspaceSection = ({ children, hint, label, onNew }: Props) => {
+  const [on, toggle] = useToggle(true);
+
   return (
     <div className="space-y-4">
       <div className="group flex items-center px-3.5">
         <Button
           variant={"transparent"}
+          onClick={toggle}
           className="size-6 shrink-0 p-0.5 text-xs text-[#f9edffcc]"
         >
-          <FaCaretDown className="size-4" />
+          <FaCaretDown className={cn("size-4", !on && "rotate-180")} />
         </Button>
         <Button
           variant={"transparent"}
@@ -41,7 +48,7 @@ const WorkspaceSection = ({ children, hint, label, onNew }: Props) => {
           </Hint>
         )}
       </div>
-      {children}
+      {on && children}
     </div>
   );
 };
