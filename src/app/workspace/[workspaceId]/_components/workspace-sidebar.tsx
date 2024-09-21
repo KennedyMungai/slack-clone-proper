@@ -7,9 +7,10 @@ import {
   AlertTriangleIcon,
   LoaderIcon,
   MessageSquareTextIcon,
+  SendHorizontalIcon,
 } from "lucide-react";
-import WorkspaceHeader from "./workspace-header";
 import SidebarItem from "./sidebar-item";
+import WorkspaceHeader from "./workspace-header";
 
 const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId();
@@ -49,6 +50,11 @@ const WorkspaceSidebar = () => {
           label="Threads"
           icon={MessageSquareTextIcon}
           id="threads"
+        />
+        <SidebarItem
+          label="Drafts & Sent"
+          icon={SendHorizontalIcon}
+          id="drafts"
         />
       </div>
     </div>
