@@ -26,7 +26,12 @@ const WorkspaceSection = ({ children, hint, label, onNew }: Props) => {
           onClick={toggle}
           className="size-6 shrink-0 p-0.5 text-xs text-[#f9edffcc]"
         >
-          <FaCaretDown className={cn("size-4", !on && "rotate-180")} />
+          <FaCaretDown
+            className={cn(
+              "size-4 transition-all",
+              !on && "rotate-180 transition-all",
+            )}
+          />
         </Button>
         <Button
           variant={"transparent"}
