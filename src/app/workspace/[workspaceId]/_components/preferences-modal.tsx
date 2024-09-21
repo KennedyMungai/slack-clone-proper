@@ -15,6 +15,7 @@ import { useRemoveWorkspace } from "@/features/workspaces/api/use-remove-workspa
 import { useUpdateWorkspace } from "@/features/workspaces/api/use-update-workspace";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { TrashIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
 
@@ -29,6 +30,8 @@ const PreferencesModal = ({ initialValue, open, setOpen }: Props) => {
   const [editOpen, setEditOpen] = useState(false);
 
   const workspaceId = useWorkspaceId();
+
+  const router = useRouter();
 
   const { mutate: updateWorkspace, isPending: isUpdatingWorkspace } =
     useUpdateWorkspace();
@@ -50,6 +53,21 @@ const PreferencesModal = ({ initialValue, open, setOpen }: Props) => {
           toast.success("Workspace updated");
         },
         onError: () => toast.error("Failed to update workspace"),
+      },
+    );
+  };
+
+  const handleRemove = () => {
+    removeWorkspace(
+      { id: workspaceId },
+      {
+        onSuccess: () => {
+          setOpen(false);
+          toast.success("Workspace removed");
+
+          router.replace("/");
+        },
+        onError: () => toast.error("Failed to remove workspace"),
       },
     );
   };
@@ -103,8 +121,8 @@ const PreferencesModal = ({ initialValue, open, setOpen }: Props) => {
           </Dialog>
 
           <button
-            disabled={false}
-            onClick={() => {}}
+            disabled={isRemovingWorkspace}
+            onClick={handleRemove}
             className="flex cursor-pointer items-center gap-x-2 rounded-lg border bg-white px-5 py-4 text-rose-600 hover:bg-gray-50"
           >
             <TrashIcon className="size-4" />
