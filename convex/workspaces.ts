@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { auth } from "./auth";
+import { Doc } from "./_generated/dataModel";
 
 const generateCode = () =>
   Array.from(
@@ -56,7 +57,7 @@ export const get = query({
       if (workspace) workspaces.push(workspace);
     }
 
-    return workspaces;
+    return workspaces as Doc<"workspaces">[];
   },
 });
 
