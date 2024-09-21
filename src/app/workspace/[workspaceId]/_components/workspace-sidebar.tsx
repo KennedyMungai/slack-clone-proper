@@ -63,18 +63,18 @@ const WorkspaceSidebar = () => {
           icon={SendHorizontalIcon}
           id="drafts"
         />
-        <Separator className="my-2 bg-accent/20" />
-        <WorkspaceSection label="Channels" hint="New channel" onNew={() => {}}>
-          {channels?.map((channelItem) => (
-            <SidebarItem
-              key={channelItem._id}
-              label={channelItem.name}
-              icon={HashIcon}
-              id={channelItem._id}
-            />
-          ))}
-        </WorkspaceSection>
       </div>
+      <Separator className="my-2 bg-accent/20" />
+      <WorkspaceSection label="Channels" hint="New channel" onNew={() => {}}>
+        {channels?.map((channelItem) => (
+          <SidebarItem
+            key={channelItem._id}
+            label={channelItem.name}
+            icon={HashIcon}
+            id={channelItem._id}
+          />
+        ))}
+      </WorkspaceSection>
     </div>
   );
 };
