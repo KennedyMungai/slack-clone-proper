@@ -41,8 +41,8 @@ const SidebarItem = ({ icon: Icon, id, label, variant }: Props) => {
       className={cn(sidebarItemVariants({ variant }))}
     >
       <Link href={`/workspace/${workspaceId}/channel/${id}`}>
-        <Icon className="mr-2 size-6" />
-        <span className="text-base">{label}</span>
+        <Icon className="mr-2 size-5 shrink-0" />
+        <span className="truncate text-sm">{label}</span>
       </Link>
     </Button>
   );
