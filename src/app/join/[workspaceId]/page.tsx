@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useMemo } from "react";
 import VerificationInput from "react-verification-input";
 import { toast } from "sonner";
 
@@ -35,6 +36,12 @@ const JoinPage = () => {
       </div>
     );
   }
+
+  const isMember = useMemo(() => data?.isMember, [data?.isMember]);
+
+  useEffect(() => {
+    if (isMember) router.push(`/workspace/${workspaceId}`);
+  }, [isMember, router, workspaceId]);
 
   const handleComplete = (value: string) => {
     mutate(
