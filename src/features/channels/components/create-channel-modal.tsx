@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { useCreateChannel } from "@/features/channels/api/use-create-channel";
 import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 const CreateChannelModal = () => {
@@ -19,6 +20,8 @@ const CreateChannelModal = () => {
   const [name, setName] = useState("");
 
   const workspaceId = useWorkspaceId();
+
+  const router = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\s+/g, "-").toLowerCase();
@@ -40,8 +43,9 @@ const CreateChannelModal = () => {
       },
       {
         onSuccess: (id) => {
-          // TODO: Redirect to new channel
           handleClose();
+
+          router.push(`/workspace/${workspaceId}/channel/${id}`);
         },
       },
     );
