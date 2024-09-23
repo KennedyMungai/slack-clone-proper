@@ -96,7 +96,12 @@ const WorkspaceHeader = ({ workspace, isAdmin }: Props) => {
         setOpen={setPreferencesOpen}
         initialValue={workspace.name}
       />
-      <InviteModal open={inviteOpen} setOpen={setInviteOpen} />
+      <InviteModal
+        open={inviteOpen}
+        setOpen={setInviteOpen}
+        name={workspace.name}
+        joinCode={workspace.joinCode}
+      />
     </>
   );
 };

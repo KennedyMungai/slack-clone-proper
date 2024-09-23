@@ -8,14 +8,16 @@ import {
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
+  name: string;
+  joinCode: string;
 };
 
-const InviteModal = ({ open, setOpen }: Props) => {
+const InviteModal = ({ open, setOpen, joinCode, name }: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Invite people to your workspace</DialogTitle>
+          <DialogTitle>Invite people to {name}</DialogTitle>
         </DialogHeader>
       </DialogContent>
     </Dialog>
