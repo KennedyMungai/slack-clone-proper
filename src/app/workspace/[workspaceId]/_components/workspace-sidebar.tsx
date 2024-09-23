@@ -80,15 +80,21 @@ const WorkspaceSidebar = () => {
           />
         ))}
       </WorkspaceSection>
-      {members?.map((memberItem) => (
-        <UserItem
-          key={memberItem._id}
-          id={memberItem._id}
-          image={memberItem.user.image}
-          label={memberItem.user.name}
-          variant="active"
-        />
-      ))}
+      <WorkspaceSection
+        label="Direct Messages"
+        hint="New Direct Message"
+        onNew={() => {}}
+      >
+        {members?.map((memberItem) => (
+          <UserItem
+            key={memberItem._id}
+            id={memberItem._id}
+            image={memberItem.user.image}
+            label={memberItem.user.name}
+            variant="active"
+          />
+        ))}
+      </WorkspaceSection>
     </div>
   );
 };
