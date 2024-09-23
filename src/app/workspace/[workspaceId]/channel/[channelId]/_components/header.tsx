@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRemoveChannel } from "@/features/channels/api/use-remove-channel";
 import { useUpdateChannel } from "@/features/channels/api/use-update-channel";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useChannelId } from "@/hooks/use-channel-id";
 import useConfirm from "@/hooks/use-confirm";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
@@ -46,9 +47,19 @@ const Header = ({ title }: Props) => {
   const { mutate: removeChannel, isPending: isRemovingChannel } =
     useRemoveChannel();
 
+  const { data: member } = useCurrentMember({
+    workspaceId,
+  });
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\s+/g, "-").toLowerCase();
     setValue(value);
+  };
+
+  const handleEditOpen = (value: boolean) => {
+    if (member?.role !== "admin") return;
+
+    setEditOpen(value);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -102,14 +113,16 @@ const Header = ({ title }: Props) => {
             <DialogTitle># {title}</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col gap-y-2 px-4 pb-4">
-            <Dialog open={editOpen} onOpenChange={setEditOpen}>
+            <Dialog open={editOpen} onOpenChange={handleEditOpen}>
               <DialogTrigger asChild>
                 <div className="cursor-pointer rounded-lg border bg-white px-5 py-4 hover:bg-gray-50">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-semibold">Channel Name</p>
-                    <p className="text-sm font-semibold text-[#126483] hover:underline">
-                      Edit
-                    </p>
+                    {member?.role === "admin" && (
+                      <p className="text-sm font-semibold text-[#126483] hover:underline">
+                        Edit
+                      </p>
+                    )}
                   </div>
                   <p className="text-sm"># {title}</p>
                 </div>
@@ -140,14 +153,16 @@ const Header = ({ title }: Props) => {
                 </form>
               </DialogContent>
             </Dialog>
-            <button
-              className="flex cursor-pointer items-center gap-x-2 rounded-lg border bg-white px-5 py-4 text-rose-600 hover:bg-gray-50"
-              onClick={handleDelete}
-              disabled={isRemovingChannel}
-            >
-              <TrashIcon className="size-4" />
-              <p className="text-sm font-semibold">Delete Channel</p>
-            </button>
+            {member?.role === "admin" && (
+              <button
+                className="flex cursor-pointer items-center gap-x-2 rounded-lg border bg-white px-5 py-4 text-rose-600 hover:bg-gray-50"
+                onClick={handleDelete}
+                disabled={isRemovingChannel}
+              >
+                <TrashIcon className="size-4" />
+                <p className="text-sm font-semibold">Delete Channel</p>
+              </button>
+            )}
           </div>
         </DialogContent>
       </Dialog>
