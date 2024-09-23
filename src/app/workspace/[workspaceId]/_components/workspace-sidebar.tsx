@@ -2,6 +2,7 @@
 
 import { Separator } from "@/components/ui/separator";
 import { useGetChannels } from "@/features/channels/api/use-get-channels";
+import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
@@ -14,15 +15,14 @@ import {
   SendHorizontalIcon,
 } from "lucide-react";
 import SidebarItem from "./sidebar-item";
+import UserItem from "./user-item";
 import WorkspaceHeader from "./workspace-header";
 import WorkspaceSection from "./workspace-section";
-import UserItem from "./user-item";
-import { useCreateChannelModal } from "@/features/channels/store/use-create-channel-modal";
 
 const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId();
 
-  const [open, setOpen] = useCreateChannelModal();
+  const [, setOpen] = useCreateChannelModal();
 
   const { data: member, isLoading: isMemberLoading } = useCurrentMember({
     workspaceId,
@@ -73,7 +73,11 @@ const WorkspaceSidebar = () => {
         />
       </div>
       <Separator className="my-2 bg-accent/20" />
-      <WorkspaceSection label="Channels" hint="New channel" onNew={() => {}}>
+      <WorkspaceSection
+        label="Channels"
+        hint="New channel"
+        onNew={() => setOpen(true)}
+      >
         {channels?.map((channelItem) => (
           <SidebarItem
             key={channelItem._id}
@@ -86,7 +90,7 @@ const WorkspaceSidebar = () => {
       <WorkspaceSection
         label="Direct Messages"
         hint="New Direct Message"
-        onNew={() => setOpen(true)}
+        onNew={() => {}}
       >
         {members?.map((memberItem) => (
           <UserItem
