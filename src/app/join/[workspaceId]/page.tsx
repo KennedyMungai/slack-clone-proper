@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useGetWorkspaceInfo } from "@/features/workspaces/api/use-get-workspace-info";
 import { useJoin } from "@/features/workspaces/api/use-join";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -61,7 +62,10 @@ const JoinPage = () => {
         </div>
         <VerificationInput
           classNames={{
-            container: "flex gap-x-2",
+            container: cn(
+              "flex gap-x-2",
+              isPending && "opacity-50 cursor-not-allowed",
+            ),
             character:
               "uppercase h-auto rounded-md border border-gray-30 flex items-center justify-center text-lg font-medium text-gray-500",
             characterInactive: "bg-muted",
