@@ -22,6 +22,12 @@ const JoinPage = () => {
   });
 
   const { mutate, isPending } = useJoin();
+  
+    const isMember = useMemo(() => data?.isMember, [data?.isMember]);
+
+    useEffect(() => {
+      if (isMember) router.push(`/workspace/${workspaceId}`);
+    }, [isMember, router, workspaceId]);
 
   if (isLoading) {
     return (
@@ -36,12 +42,6 @@ const JoinPage = () => {
       </div>
     );
   }
-
-  const isMember = useMemo(() => data?.isMember, [data?.isMember]);
-
-  useEffect(() => {
-    if (isMember) router.push(`/workspace/${workspaceId}`);
-  }, [isMember, router, workspaceId]);
 
   const handleComplete = (value: string) => {
     mutate(
