@@ -31,7 +31,7 @@ const ChannelPage = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <Header channelName={channel.name} />
+      <Header title={channel.name} />
     </div>
   );
 };

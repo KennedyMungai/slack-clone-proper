@@ -1,11 +1,11 @@
 "use client";
 
 type Props = {
-  channelName: string;
+  title: string;
 };
 
-const Header = ({ channelName }: Props) => {
-  return <div>{channelName}</div>;
+const Header = ({ title }: Props) => {
+  return <div>{title}</div>;
 };
 
 export default Header;
