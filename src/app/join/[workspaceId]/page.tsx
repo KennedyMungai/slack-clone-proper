@@ -39,10 +39,10 @@ const JoinPage = () => {
     mutate(
       { workspaceId, joinCode: value },
       {
-        onSuccess: () => {
+        onSuccess: (id) => {
           toast.success("Workspace joined");
 
-          router.replace(`/workspace/${workspaceId}`);
+          router.replace(`/workspace/${id}`);
         },
         onError: () => toast.error("Failed to join workspace"),
       },
