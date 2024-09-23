@@ -62,17 +62,22 @@ const InviteModal = ({ open, setOpen, joinCode, name }: Props) => {
             variant={"ghost"}
             size="sm"
             onClick={handleCopy}
+            disabled={isPending}
           >
             <span>Copy link</span> <CopyIcon className="size-5" />
           </Button>
         </div>
         <div className="flex w-full items-center justify-between">
-          <Button onClick={handleNewCode} variant={"outline"}>
+          <Button
+            onClick={handleNewCode}
+            variant={"outline"}
+            disabled={isPending}
+          >
             New Code
             <RefreshCcwIcon className="ml-2 size-4" />
           </Button>
           <DialogClose asChild>
-            <Button>Close</Button>
+            <Button disabled={isPending}>Close</Button>
           </DialogClose>
         </div>
       </DialogContent>
