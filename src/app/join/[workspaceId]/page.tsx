@@ -24,7 +24,7 @@ const JoinPage = ({ params: { workspaceId } }: Props) => {
           width={200}
           height={200}
           alt="Logo"
-          className="animate-pulse"
+          className="animate-pulse opacity-50"
         />
       </div>
     );
