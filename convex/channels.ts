@@ -79,3 +79,31 @@ export const getById = query({
     return channel;
   },
 });
+
+export const update = mutation({
+  args: {
+    id: v.id("channels"),
+    workspaceId: v.id("workspaces"),
+    name: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const userId = await auth.getUserId(ctx);
+
+    if (!userId) throw new Error("Unauthorized");
+
+    const member = await ctx.db
+      .query("members")
+      .withIndex("by_workspace_id_user_id", (q) =>
+        q.eq("workspaceId", args.workspaceId).eq("userId", userId),
+      )
+      .unique();
+
+    if (!member || member.role !== "admin") throw new Error("Unauthorized");
+
+    await ctx.db.patch(args.id, {
+      name: args.name,
+    });
+
+    return args.id;
+  },
+});
