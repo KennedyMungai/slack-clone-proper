@@ -1,13 +1,17 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useNewJoinCode } from "@/features/workspaces/api/use-new-join-code";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { CopyIcon } from "lucide-react";
+import { CopyIcon, RefreshCcwIcon } from "lucide-react";
 import { toast } from "sonner";
 
 type Props = {
@@ -20,12 +24,24 @@ type Props = {
 const InviteModal = ({ open, setOpen, joinCode, name }: Props) => {
   const workspaceId = useWorkspaceId();
 
+  const { mutate, isPending } = useNewJoinCode();
+
   const handleCopy = () => {
     const inviteLink = window.location.origin + `/join/${workspaceId}`;
 
     navigator.clipboard
       .writeText(inviteLink)
       .then(() => toast.success("Invite link copied to clipboard"));
+  };
+
+  const handleNewCode = () => {
+    mutate(
+      { workspaceId },
+      {
+        onSuccess: () => toast.success("Invite code regenerated"),
+        onError: () => toast.error("Failed to regenerate invite code"),
+      },
+    );
   };
 
   return (
@@ -49,6 +65,15 @@ const InviteModal = ({ open, setOpen, joinCode, name }: Props) => {
           >
             <span>Copy link</span> <CopyIcon className="size-5" />
           </Button>
+        </div>
+        <div className="flex w-full items-center justify-between">
+          <Button onClick={handleNewCode} variant={"outline"}>
+            New Code
+            <RefreshCcwIcon className="ml-2 size-4" />
+          </Button>
+          <DialogClose asChild>
+            <Button>Close</Button>
+          </DialogClose>
         </div>
       </DialogContent>
     </Dialog>
