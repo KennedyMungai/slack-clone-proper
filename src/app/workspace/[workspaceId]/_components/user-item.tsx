@@ -41,7 +41,7 @@ const UserItem = ({ id, label = "Member", image, variant }: Props) => {
       <Link href={`/workspace/${workspaceId}/member/${id}`}>
         <Avatar className="mr-1 size-6 rounded-md">
           <AvatarImage className="rounded-md" src={image} alt={label} />
-          <AvatarFallback className="rounded-md">
+          <AvatarFallback className="rounded-md bg-sky-500 text-white">
             {label.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
