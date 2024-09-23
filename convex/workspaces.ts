@@ -5,7 +5,7 @@ import { Doc } from "./_generated/dataModel";
 
 const generateCode = () =>
   Array.from(
-    { length: 9 },
+    { length: 6 },
     () =>
       "0123456789abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 36)],
   ).join("");
