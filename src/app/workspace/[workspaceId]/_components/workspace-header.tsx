@@ -12,6 +12,7 @@ import {
 import { ChevronDownIcon, ListFilterIcon, SquarePenIcon } from "lucide-react";
 import { useState } from "react";
 import { Doc } from "../../../../../convex/_generated/dataModel";
+import InviteModal from "./invite-modal";
 import PreferencesModal from "./preferences-modal";
 
 type Props = {
@@ -21,6 +22,7 @@ type Props = {
 
 const WorkspaceHeader = ({ workspace, isAdmin }: Props) => {
   const [preferencesOpen, setPreferencesOpen] = useState(false);
+  const [inviteOpen, setInviteOpen] = useState(false);
 
   return (
     <>
@@ -52,7 +54,7 @@ const WorkspaceHeader = ({ workspace, isAdmin }: Props) => {
             {isAdmin && (
               <DropdownMenuItem
                 className="cursor-pointer py-2"
-                onClick={() => {}}
+                onClick={() => setInviteOpen(true)}
               >
                 Invite People to {workspace.name}
               </DropdownMenuItem>
@@ -94,6 +96,7 @@ const WorkspaceHeader = ({ workspace, isAdmin }: Props) => {
         setOpen={setPreferencesOpen}
         initialValue={workspace.name}
       />
+      <InviteModal open={inviteOpen} setOpen={setInviteOpen} />
     </>
   );
 };
