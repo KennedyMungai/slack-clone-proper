@@ -76,7 +76,7 @@ const WorkspaceSidebar = () => {
       <WorkspaceSection
         label="Channels"
         hint="New channel"
-        onNew={() => setOpen(true)}
+        onNew={member.role === "admin" ? () => setOpen(true) : undefined}
       >
         {channels?.map((channelItem) => (
           <SidebarItem
