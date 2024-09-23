@@ -55,7 +55,7 @@ const Workspace = () => {
     isAdmin,
   ]);
 
-  if (isWorkspaceLoading) {
+  if (isWorkspaceLoading || isChannelsLoading || isMemberLoading) {
     return (
       <div className="flex h-full flex-1 flex-col items-center justify-center gap-y-2 bg-white">
         <LoaderIcon className="size-6 animate-spin text-muted-foreground" />
@@ -63,7 +63,7 @@ const Workspace = () => {
     );
   }
 
-  if (!workspace) {
+  if (!workspace || !member) {
     return (
       <div className="items-cent flex h-full flex-1 flex-col gap-y-2 bg-white">
         <TriangleAlertIcon className="size-6 text-red-500" />
