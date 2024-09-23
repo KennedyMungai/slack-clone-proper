@@ -1,6 +1,9 @@
 "use client";
 
+import { Separator } from "@/components/ui/separator";
+import { useGetChannels } from "@/features/channels/api/use-get-channels";
 import { useCurrentMember } from "@/features/members/api/use-current-member";
+import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import {
@@ -12,9 +15,8 @@ import {
 } from "lucide-react";
 import SidebarItem from "./sidebar-item";
 import WorkspaceHeader from "./workspace-header";
-import { useGetChannels } from "@/features/channels/api/use-get-channels";
-import { Separator } from "@/components/ui/separator";
 import WorkspaceSection from "./workspace-section";
+import UserItem from "./user-item";
 
 const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId();
@@ -26,6 +28,9 @@ const WorkspaceSidebar = () => {
     id: workspaceId,
   });
   const { data: channels, isLoading: isChannelsLoading } = useGetChannels({
+    workspaceId,
+  });
+  const { data: members, isLoading: isMembersLoading } = useGetMembers({
     workspaceId,
   });
 
@@ -75,6 +80,15 @@ const WorkspaceSidebar = () => {
           />
         ))}
       </WorkspaceSection>
+      {members?.map((memberItem) => (
+        <UserItem
+          key={memberItem._id}
+          id={memberItem._id}
+          image={memberItem.user.image}
+          label={memberItem.user.name}
+          variant="active"
+        />
+      ))}
     </div>
   );
 };
