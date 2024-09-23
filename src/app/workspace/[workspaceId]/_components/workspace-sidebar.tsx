@@ -39,7 +39,12 @@ const WorkspaceSidebar = () => {
     workspaceId,
   });
 
-  if (isWorkspaceLoading || isMemberLoading) {
+  if (
+    isWorkspaceLoading ||
+    isMemberLoading ||
+    isChannelsLoading ||
+    isMembersLoading
+  ) {
     return (
       <div className="flex h-full flex-col items-center justify-center bg-[#5E2C5F]">
         <LoaderIcon className="size-5 animate-spin text-white" />
