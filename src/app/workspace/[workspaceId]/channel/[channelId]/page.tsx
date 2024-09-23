@@ -6,7 +6,7 @@ type Props = {
 };
 
 const ChannelPage = ({ params: { channelId, workspaceId } }: Props) => {
-  return <div>ChannelPage</div>;
+  return <div>{channelId}</div>;
 };
 
 export default ChannelPage;
