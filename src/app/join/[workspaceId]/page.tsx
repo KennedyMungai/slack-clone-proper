@@ -2,19 +2,24 @@
 
 import { Button } from "@/components/ui/button";
 import { useGetWorkspaceInfo } from "@/features/workspaces/api/use-get-workspace-info";
+import { useJoin } from "@/features/workspaces/api/use-join";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import VerificationInput from "react-verification-input";
-import { Id } from "../../../../convex/_generated/dataModel";
+import { toast } from "sonner";
 
-type Props = {
-  params: { workspaceId: string };
-};
+const JoinPage = () => {
+  const workspaceId = useWorkspaceId();
 
-const JoinPage = ({ params: { workspaceId } }: Props) => {
+  const router = useRouter();
+
   const { data, isLoading } = useGetWorkspaceInfo({
-    id: workspaceId as Id<"workspaces">,
+    id: workspaceId,
   });
+
+  const { mutate, isPending } = useJoin();
 
   if (isLoading) {
     return (
@@ -29,6 +34,20 @@ const JoinPage = ({ params: { workspaceId } }: Props) => {
       </div>
     );
   }
+
+  const handleComplete = (value: string) => {
+    mutate(
+      { workspaceId, joinCode: value },
+      {
+        onSuccess: () => {
+          toast.success("Workspace joined");
+
+          router.replace(`/workspace/${workspaceId}`);
+        },
+        onError: () => toast.error("Failed to join workspace"),
+      },
+    );
+  };
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-y-8 rounded-lg bg-white p-8 shadow-sm">
@@ -51,6 +70,7 @@ const JoinPage = ({ params: { workspaceId } }: Props) => {
           }}
           autoFocus
           length={6}
+          onComplete={handleComplete}
         />
       </div>
       <div className="flex gap-x-4">
