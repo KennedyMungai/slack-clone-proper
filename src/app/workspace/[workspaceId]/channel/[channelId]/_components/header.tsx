@@ -11,20 +11,43 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { useUpdateChannel } from "@/features/channels/api/use-update-channel";
+import { useChannelId } from "@/hooks/use-channel-id";
 import { ChevronDownIcon, TrashIcon } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { toast } from "sonner";
 
 type Props = {
   title: string;
 };
 
 const Header = ({ title }: Props) => {
+  const channelId = useChannelId();
+
   const [editOpen, setEditOpen] = useState(false);
   const [value, setValue] = useState(title);
+
+  const { mutate: updateChannel, isPending: isUpdatingChannel } =
+    useUpdateChannel();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\s+/g, "-").toLowerCase();
     setValue(value);
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    updateChannel(
+      { id: channelId, name: value },
+      {
+        onSuccess: () => {
+          toast.success("Channel Updated");
+          setEditOpen(false);
+        },
+        onError: () => toast.error("Failed to update channel"),
+      },
+    );
   };
 
   return (
@@ -61,10 +84,10 @@ const Header = ({ title }: Props) => {
                 <DialogHeader>
                   <DialogTitle>Rename this channel</DialogTitle>
                 </DialogHeader>
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={handleSubmit}>
                   <Input
                     value={value}
-                    disabled={false}
+                    disabled={isUpdatingChannel}
                     onChange={handleChange}
                     required
                     autoFocus
@@ -74,11 +97,11 @@ const Header = ({ title }: Props) => {
                   />
                   <DialogFooter>
                     <DialogClose asChild>
-                      <Button variant={"outline"} disabled={false}>
+                      <Button variant={"outline"} disabled={isUpdatingChannel}>
                         Cancel
                       </Button>
                     </DialogClose>
-                    <Button disabled={false}>Save</Button>
+                    <Button disabled={isUpdatingChannel}>Save</Button>
                   </DialogFooter>
                 </form>
               </DialogContent>
