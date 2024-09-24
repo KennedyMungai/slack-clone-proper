@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useCurrentUser } from "@/features/auth/api/use-current-user";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { Loader2Icon, LogOutIcon } from "lucide-react";
+import { LoaderIcon, LogOutIcon } from "lucide-react";
 
 const UserButton = () => {
   const { data, isLoading } = useCurrentUser();
@@ -17,9 +17,7 @@ const UserButton = () => {
   const { signOut } = useAuthActions();
 
   if (isLoading)
-    return (
-      <Loader2Icon className="size-4 animate-spin text-muted-foreground" />
-    );
+    return <LoaderIcon className="size-4 animate-spin text-muted-foreground" />;
 
   if (!data) return null;
 
