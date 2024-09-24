@@ -49,7 +49,7 @@ const Editor = ({
   const disabledRef = useRef(disabled);
 
   const [text, setText] = useState("");
-  const [isToolbarVisible, setIsToolbarVisible] = useState(false);
+  const [isToolbarVisible, setIsToolbarVisible] = useState(true);
 
   useLayoutEffect(() => {
     submitRef.current = onSubmit;
@@ -135,7 +135,7 @@ const Editor = ({
         <div ref={containerRef} className="ql-custom h-full" />
         <div className="z-[5] flex px-2 pb-2">
           <Hint
-            label={isToolbarVisible ? "Show formatting" : "Hide formatting"}
+            label={isToolbarVisible ? "Hide formatting" : "Show formatting"}
           >
             <Button
               size="iconSm"
