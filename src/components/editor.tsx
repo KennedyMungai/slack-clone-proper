@@ -15,7 +15,8 @@ import {
 } from "react";
 import { MdSend } from "react-icons/md";
 import { PiTextAa } from "react-icons/pi";
-import Hint from "./hint";
+import Hint from "@/components/hint";
+import EmojiPopover from "@/components/emoji-popover";
 
 type EditorValue = {
   image: File | null;
@@ -146,7 +147,7 @@ const Editor = ({
               <PiTextAa className="size-4" />
             </Button>
           </Hint>
-          <Hint label="Emoji">
+          <EmojiPopover onEmojiSelect={() => {}}>
             <Button
               size="iconSm"
               disabled={disabled}
@@ -155,7 +156,7 @@ const Editor = ({
             >
               <SmileIcon className="size-4" />
             </Button>
-          </Hint>
+          </EmojiPopover>
           {variant === "create" && (
             <Hint label="Image">
               <Button
