@@ -33,6 +33,8 @@ export const create = mutation({
 
     if (!member) throw new Error("Unauthorized");
 
+    // TODO: Handle conversationId
+
     const messageId = await ctx.db.insert("messages", {
       memberId: member._id,
       body: args.body,
