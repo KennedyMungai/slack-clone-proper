@@ -140,7 +140,7 @@ const Editor = ({
     if (toolbarElement) toolbarElement.classList.toggle("hidden");
   };
 
-  const isEmpty = text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
+  const isEmpty = !image && text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
 
   const onEmojiSelect = (emoji: { native: string }) => {
     const quill = quillRef.current;
