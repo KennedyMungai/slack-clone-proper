@@ -205,7 +205,12 @@ const Editor = ({
           )}
         </div>
       </div>
-      <div className="flex justify-end p-2 text-[10px] text-muted-foreground">
+      <div
+        className={cn(
+          "flex justify-end p-2 text-[10px] text-muted-foreground opacity-0 transition-opacity",
+          !isEmpty && "opacity-100",
+        )}
+      >
         {variant === "create" && (
           <p>
             <strong>Shift + Return</strong> to add a new line
