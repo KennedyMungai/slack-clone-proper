@@ -9,7 +9,11 @@ import { PiTextAa } from "react-icons/pi";
 import { MdSend } from "react-icons/md";
 import Hint from "./hint";
 
-const Editor = () => {
+type Props = {
+  variant?: "create" | "update";
+};
+
+const Editor = ({ variant = "create" }: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -57,25 +61,28 @@ const Editor = () => {
               <SmileIcon className="size-4" />
             </Button>
           </Hint>
-          <Hint label="Image">
+          {variant === "create" && (
+            <Hint label="Image">
+              <Button
+                size="iconSm"
+                disabled={false}
+                variant={"ghost"}
+                onClick={() => {}}
+              >
+                <ImageIcon className="size-4" />
+              </Button>
+            </Hint>
+          )}
+          {variant === "create" && (
             <Button
-              size="iconSm"
+              className="ml-auto bg-[#007a5a] text-white hover:bg-[#007a5a]/80"
+              size={"iconSm"}
               disabled={false}
-              variant={"ghost"}
               onClick={() => {}}
             >
-              <ImageIcon className="size-4" />
+              <MdSend className="size-4" />
             </Button>
-          </Hint>
-
-          <Button
-            className="ml-auto bg-[#007a5a] text-white hover:bg-[#007a5a]/80"
-            size={"iconSm"}
-            disabled={false}
-            onClick={() => {}}
-          >
-            <MdSend className="size-4" />
-          </Button>
+          )}
         </div>
       </div>
       <div className="flex justify-end p-2 text-[10px] text-muted-foreground">
