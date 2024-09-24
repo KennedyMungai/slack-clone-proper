@@ -18,14 +18,14 @@ import data from "@emoji-mart/data";
 type Props = {
   children: ReactNode;
   hint?: string;
-  onEmojiSelect: (emoji: unknown) => void;
+  onEmojiSelect: (emoji: { native: string }) => void;
 };
 
 const EmojiPopover = ({ children, onEmojiSelect, hint = "Emoji" }: Props) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
-  const onSelect = (emoji: unknown) => {
+  const onSelect = (emoji: { native: string }) => {
     onEmojiSelect(emoji);
 
     setPopoverOpen(false);
