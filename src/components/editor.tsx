@@ -73,6 +73,26 @@ const Editor = ({ variant = "create" }: Props) => {
               </Button>
             </Hint>
           )}
+          {variant === "update" && (
+            <div className="ml-auto flex items-center gap-x-2">
+              <Button
+                variant={"outline"}
+                size="sm"
+                onClick={() => {}}
+                disabled={false}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => {}}
+                disabled={false}
+                className="bg-[#007a5a] text-white hover:bg-[#007a5a]/80"
+              >
+                Save
+              </Button>
+            </div>
+          )}
           {variant === "create" && (
             <Button
               className="ml-auto bg-[#007a5a] text-white hover:bg-[#007a5a]/80"
