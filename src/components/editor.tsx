@@ -153,15 +153,17 @@ const Editor = ({
         {!!image && (
           <div className="p-2">
             <div className="group/image relative flex size-[62px] items-center justify-center">
-              <button
-                onClick={() => {
-                  setImage(null);
-                  imageElementRef.current!.value = "";
-                }}
-                className="absolute -right-2.5 -top-2.5 z-[4] hidden size-6 items-center justify-center rounded-full border-2 border-white bg-black/70 text-white hover:bg-black group-hover/image:flex"
-              >
-                <XIcon className="size-3.5" />
-              </button>
+              <Hint label="Remove image">
+                <button
+                  onClick={() => {
+                    setImage(null);
+                    imageElementRef.current!.value = "";
+                  }}
+                  className="absolute -right-2.5 -top-2.5 z-[4] hidden size-6 items-center justify-center rounded-full border-2 border-white bg-black/70 text-white hover:bg-black group-hover/image:flex"
+                >
+                  <XIcon className="size-3.5" />
+                </button>
+              </Hint>
               <Image
                 src={URL.createObjectURL(image)}
                 alt={image.name}
