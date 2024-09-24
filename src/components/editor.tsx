@@ -1,11 +1,18 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { ImageIcon, SmileIcon } from "lucide-react";
 import Quill, { type QuillOptions } from "quill";
 import { Delta, Op } from "quill/core";
 import "quill/dist/quill.snow.css";
-import { MutableRefObject, useEffect, useLayoutEffect, useRef } from "react";
+import {
+  MutableRefObject,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { MdSend } from "react-icons/md";
 import { PiTextAa } from "react-icons/pi";
 import Hint from "./hint";
@@ -37,9 +44,11 @@ const Editor = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const submitRef = useRef(onSubmit);
   const placeholderRef = useRef(placeholder);
-  const quillRef = useRef<Quill | null>;
+  const quillRef = useRef<Quill | null>(null);
   const defaultValueRef = useRef(defaultValue);
   const disabledRef = useRef(disabled);
+
+  const [text, setText] = useState("");
 
   useLayoutEffect(() => {
     submitRef.current = onSubmit;
@@ -62,12 +71,29 @@ const Editor = ({
       placeholder: placeholderRef.current,
     };
 
-    new Quill(editorContainer, options);
+    const quill = new Quill(editorContainer, options);
+    quillRef.current = quill;
+    quillRef.current.focus();
+
+    if (innerRef) innerRef.current = quill;
+
+    quill.setContents(defaultValueRef.current);
+    setText(quill.getText());
+
+    quill.on(Quill.events.TEXT_CHANGE, () => setText(quill.getText()));
 
     return () => {
+      quill.off(Quill.events.TEXT_CHANGE);
+
       if (container) container.innerHTML = "";
+
+      if (quillRef.current) quillRef.current = null;
+
+      if (innerRef) innerRef.current = null;
     };
-  }, []);
+  }, [innerRef]);
+
+  const isEmpty = text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
 
   return (
     <div className="flex flex-col">
@@ -128,9 +154,14 @@ const Editor = ({
           )}
           {variant === "create" && (
             <Button
-              className="ml-auto bg-[#007a5a] text-white hover:bg-[#007a5a]/80"
+              className={cn(
+                "ml-auto",
+                isEmpty
+                  ? "bg-white text-muted-foreground hover:bg-white"
+                  : "bg-[#007a5a] text-white hover:bg-[#007a5a]/80",
+              )}
               size={"iconSm"}
-              disabled={false}
+              disabled={disabled || isEmpty}
               onClick={() => {}}
             >
               <MdSend className="size-4" />
