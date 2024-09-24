@@ -7,8 +7,8 @@ type RequestType = {
   body: string;
   image: Id<"_storage">;
   workspaceId: Id<"workspaces">;
-  channelId: Id<"channels">;
-  parentMessageId: Id<"messages">;
+  channelId?: Id<"channels">;
+  parentMessageId?: Id<"messages">;
   //   TODO: Add conversationId
 };
 type ResponseType = Id<"messages"> | null;
