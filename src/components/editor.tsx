@@ -130,6 +130,12 @@ const Editor = ({
 
   const isEmpty = text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
 
+  const onEmojiSelect = (emoji: { native: string }) => {
+    const quill = quillRef.current;
+
+    quill?.insertText(quill?.getSelection()?.index || 0, emoji.native);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col overflow-hidden rounded-md border border-slate-200 bg-white transition focus-within:border-slate-300 focus-within:shadow-sm">
@@ -147,13 +153,8 @@ const Editor = ({
               <PiTextAa className="size-4" />
             </Button>
           </Hint>
-          <EmojiPopover onEmojiSelect={() => {}}>
-            <Button
-              size="iconSm"
-              disabled={disabled}
-              variant={"ghost"}
-              onClick={() => {}}
-            >
+          <EmojiPopover onEmojiSelect={onEmojiSelect}>
+            <Button size="iconSm" disabled={disabled} variant={"ghost"}>
               <SmileIcon className="size-4" />
             </Button>
           </EmojiPopover>
