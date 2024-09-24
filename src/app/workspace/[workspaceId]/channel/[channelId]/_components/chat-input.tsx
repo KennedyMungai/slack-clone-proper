@@ -16,7 +16,6 @@ const ChatInput = ({ placeholder }: Props) => {
   return (
     <div className="w-full px-5">
       <Editor
-        variant="update"
         onSubmit={() => {}}
         placeholder={placeholder}
         disabled={false}
