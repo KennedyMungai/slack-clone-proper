@@ -15,6 +15,12 @@ const getMember = async (
     )
     .unique();
 
+const populateUser = async (ctx: QueryCtx, userId: Id<"users">) =>
+  await ctx.db.get(userId);
+
+const populateMember = async (ctx: QueryCtx, memberId: Id<"members">) =>
+  await ctx.db.get(memberId);
+
 export const create = mutation({
   args: {
     body: v.string(),
