@@ -181,7 +181,7 @@ const Editor = ({
               <Button
                 size="sm"
                 onClick={() => {}}
-                disabled={disabled}
+                disabled={disabled || isEmpty}
                 className="bg-[#007a5a] text-white hover:bg-[#007a5a]/80"
               >
                 Save
