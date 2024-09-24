@@ -13,10 +13,18 @@ type Props = {
 const ChatInput = ({ placeholder }: Props) => {
   const editorRef = useRef<Quill | null>(null);
 
+  const handleSubmit = ({
+    body,
+    image,
+  }: {
+    body: string;
+    image: File | null;
+  }) => console.log({ body, image });
+
   return (
     <div className="w-full px-5">
       <Editor
-        onSubmit={() => {}}
+        onSubmit={handleSubmit}
         placeholder={placeholder}
         disabled={false}
         innerRef={editorRef}
