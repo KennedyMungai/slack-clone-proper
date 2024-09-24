@@ -3,18 +3,50 @@
 import { Button } from "@/components/ui/button";
 import { ImageIcon, SmileIcon } from "lucide-react";
 import Quill, { type QuillOptions } from "quill";
+import { Delta, Op } from "quill/core";
 import "quill/dist/quill.snow.css";
-import { useEffect, useRef } from "react";
-import { PiTextAa } from "react-icons/pi";
+import { MutableRefObject, useEffect, useLayoutEffect, useRef } from "react";
 import { MdSend } from "react-icons/md";
+import { PiTextAa } from "react-icons/pi";
 import Hint from "./hint";
+
+type EditorValue = {
+  image: File | null;
+  body: string;
+};
 
 type Props = {
   variant?: "create" | "update";
+  onSubmit: ({ image, body }: EditorValue) => void;
+  onCancel?: () => void;
+  placeholder?: string;
+  defaultValue?: Delta | Op[];
+  disabled?: boolean;
+  innerRef?: MutableRefObject<Quill | null>;
 };
 
-const Editor = ({ variant = "create" }: Props) => {
+const Editor = ({
+  variant = "create",
+  onSubmit,
+  defaultValue = [],
+  disabled = false,
+  innerRef,
+  onCancel,
+  placeholder = "Write something...",
+}: Props) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const submitRef = useRef(onSubmit);
+  const placeholderRef = useRef(placeholder);
+  const quillRef = useRef<Quill | null>;
+  const defaultValueRef = useRef(defaultValue);
+  const disabledRef = useRef(disabled);
+
+  useLayoutEffect(() => {
+    submitRef.current = onSubmit;
+    placeholderRef.current = placeholder;
+    defaultValueRef.current = defaultValue;
+    disabledRef.current = disabled;
+  });
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -27,6 +59,7 @@ const Editor = ({ variant = "create" }: Props) => {
 
     const options: QuillOptions = {
       theme: "snow",
+      placeholder: placeholderRef.current,
     };
 
     new Quill(editorContainer, options);
