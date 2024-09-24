@@ -21,6 +21,21 @@ const populateUser = async (ctx: QueryCtx, userId: Id<"users">) =>
 const populateMember = async (ctx: QueryCtx, memberId: Id<"members">) =>
   await ctx.db.get(memberId);
 
+const populateReactions = async (ctx: QueryCtx, messageId: Id<"messages">) =>
+  await ctx.db
+    .query("reactions")
+    .withIndex("by_message_id", (q) => q.eq("messageId", messageId))
+    .collect();
+
+const populateThread = async (ctx: QueryCtx, messageId: Id<"messages">) => {
+  const messages = await ctx.db
+    .query("messages")
+    .withIndex("by_parent_message_id", (q) =>
+      q.eq("parentMessageId", messageId),
+    )
+    .collect();
+};
+
 export const create = mutation({
   args: {
     body: v.string(),
