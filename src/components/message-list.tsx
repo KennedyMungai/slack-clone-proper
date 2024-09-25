@@ -1,7 +1,9 @@
+import ChannelHero from "@/components/channel-hero";
+import Message from "@/components/message";
 import { GetMessagesReturnType } from "@/features/messages/api/use-get-messages";
 import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
-import Message from "@/components/message";
-import ChannelHero from "@/components/channel-hero";
+import { useState } from "react";
+import { Id } from "../../convex/_generated/dataModel";
 
 type Props = {
   channelName?: string;
@@ -37,6 +39,8 @@ const MessageList = ({
   memberName,
   variant = "channel",
 }: Props) => {
+  const [editingId, setEditingId] = useState<Id<"messages"> | null>(null);
+
   const groupedMessages = data?.reduce(
     (groups, message) => {
       const date = new Date(message._creationTime);
@@ -84,8 +88,8 @@ const MessageList = ({
                 image={message.image}
                 updatedAt={message.updatedAt}
                 createdAt={message._creationTime}
-                isEditing={false}
-                setEditing={() => {}}
+                isEditing={editingId === message._id}
+                setEditing={setEditingId}
                 isCompact={isCompact}
                 hideThreadButton={variant === "thread"}
                 threadCount={message.threadCount}
