@@ -10,14 +10,14 @@ import { useGetMessages } from "@/features/messages/api/use-get-messages";
 const ChannelPage = () => {
   const channelId = useChannelId();
 
-  const { results } = useGetMessages({ channelId });
+  const { results, status, loadMore } = useGetMessages({ channelId });
   const { data: channel, isLoading: isChannelLoading } = useGetChannel({
     id: channelId,
   });
 
   console.log(results);
 
-  if (isChannelLoading) {
+  if (isChannelLoading || status === "LoadingFirstPage") {
     return (
       <div className="flex h-full flex-1 items-center justify-center bg-white">
         <LoaderIcon className="size-5 animate-spin text-muted-foreground" />
