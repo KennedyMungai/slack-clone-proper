@@ -40,7 +40,12 @@ const Toolbar = ({
         </EmojiPopover>
         {!hideThreadButton && (
           <Hint label={"Reply in thread"}>
-            <Button variant={"ghost"} size={"icon"} disabled={isPending}>
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              disabled={isPending}
+              onClick={handleThread}
+            >
               <MessageSquareTextIcon className="size-5" />
             </Button>
           </Hint>
