@@ -1,4 +1,5 @@
 import { Doc, Id } from "../../convex/_generated/dataModel";
+import Renderer from "./renderer";
 
 type Props = {
   id: Id<"messages">;
@@ -27,7 +28,7 @@ type Props = {
 
 const Message = ({
   authorImage,
-  authorName,
+  authorName = "Member",
   body,
   createdAt,
   hideThreadButton,
@@ -44,7 +45,7 @@ const Message = ({
   updatedAt,
   threadImage,
 }: Props) => {
-  return <div>Message</div>;
+  return <Renderer value={body} />;
 };
 
 export default Message;
