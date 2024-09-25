@@ -132,7 +132,7 @@ const Message = ({
             <Editor
               variant="update"
               onSubmit={handleUpdate}
-              disabled={isUpdatingMessage}
+              disabled={isPending}
               defaultValue={JSON.parse(body)}
               onCancel={() => setEditingId(null)}
             />
