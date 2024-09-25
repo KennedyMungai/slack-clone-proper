@@ -6,6 +6,7 @@ import { LoaderIcon, TriangleAlertIcon } from "lucide-react";
 import ChatInput from "./_components/chat-input";
 import Header from "./_components/header";
 import { useGetMessages } from "@/features/messages/api/use-get-messages";
+import MessageList from "@/components/message-list";
 
 const ChannelPage = () => {
   const channelId = useChannelId();
@@ -37,7 +38,14 @@ const ChannelPage = () => {
   return (
     <div className="flex h-full flex-col">
       <Header title={channel.name} />
-      <div className="flex-1">{JSON.stringify(results)}</div>
+      <MessageList
+        channelName={channel.name}
+        channelCreationTime={channel._creationTime}
+        data={results}
+        loadMore={loadMore}
+        isLoadingMore={status === "LoadingMore"}
+        canLoadMore={status === "CanLoadMore"}
+      />
       <ChatInput placeholder={`Message #${channel.name}`} />
     </div>
   );
