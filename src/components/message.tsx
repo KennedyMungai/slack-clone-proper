@@ -1,3 +1,7 @@
+"use client";
+
+import Hint from "@/components/hint";
+import { format, isToday, isYesterday } from "date-fns";
 import dynamic from "next/dynamic";
 import { Doc, Id } from "../../convex/_generated/dataModel";
 
@@ -28,6 +32,9 @@ type Props = {
   threadTimestamp?: number;
 };
 
+const formatFullTime = (date: Date) =>
+  `${isToday(date) ? "Today" : isYesterday(date) ? "Yesterday" : format(date, "MMM d, yyyy")} at ${format(date, "h:mm:ss a")}`;
+
 const Message = ({
   authorImage,
   authorName = "Member",
@@ -48,7 +55,14 @@ const Message = ({
   threadImage,
 }: Props) => {
   return (
-    <div>
+    <div className="group relative flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60">
+      <div className="flex items-start gap-2">
+        <Hint label={formatFullTime(new Date(createdAt))}>
+          <button className="w-[40px] text-center text-xs leading-[22px] text-muted-foreground opacity-0 hover:underline group-hover:opacity-100">
+            {format(new Date(createdAt), "hh:mm")}
+          </button>
+        </Hint>
+      </div>
       <Renderer value={body} />
     </div>
   );
