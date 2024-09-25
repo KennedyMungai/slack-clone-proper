@@ -1,5 +1,5 @@
 import { GetMessagesReturnType } from "@/features/messages/api/use-get-messages";
-import { format, isToday, isYesterday } from "date-fns";
+import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
 import Message from "@/components/message";
 
 type Props = {
@@ -13,6 +13,8 @@ type Props = {
   memberImage?: string;
   variant?: "channel" | "thread" | "conversation";
 };
+
+const TIME_THRESHOLD = 5;
 
 const formatDateLabel = (dateStr: string) => {
   const date = new Date(dateStr);
@@ -58,7 +60,16 @@ const MessageList = ({
               {formatDateLabel(dateKey)}
             </span>
           </div>
-          {messages.map((message) => {
+          {messages.map((message, index) => {
+            const prevMessage = messages[index - 1];
+            const isCompact =
+              prevMessage &&
+              prevMessage.user._id === message.user._id &&
+              differenceInMinutes(
+                new Date(message._creationTime),
+                new Date(prevMessage._creationTime),
+              ) < TIME_THRESHOLD;
+
             return (
               <Message
                 key={message._id}
@@ -74,7 +85,7 @@ const MessageList = ({
                 createdAt={message._creationTime}
                 isEditing={false}
                 setEditing={() => {}}
-                isCompact={false}
+                isCompact={isCompact}
                 hideThreadButton={false}
                 threadCount={message.threadCount}
                 threadImage={message.threadImage}
