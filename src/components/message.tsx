@@ -47,7 +47,11 @@ const Message = ({
   updatedAt,
   threadImage,
 }: Props) => {
-  return <Renderer value={body} />;
+  return (
+    <div>
+      <Renderer value={body} />
+    </div>
+  );
 };
 
 export default Message;
