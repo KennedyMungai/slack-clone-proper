@@ -74,6 +74,17 @@ const Message = ({
             ) : null}
           </div>
         </div>
+        {!isEditing && (
+          <Toolbar
+            isAuthor={isAuthor}
+            isPending={false}
+            handleEdit={() => setEditing(id)}
+            handleThread={() => {}}
+            handleDelete={() => {}}
+            handleReaction={() => {}}
+            hideThreadButton={hideThreadButton}
+          />
+        )}
       </div>
     );
   }
