@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Doc } from "../../convex/_generated/dataModel";
 import Quill from "quill";
 
 type Props = {
-  body: Doc<"messages">["body"];
+  value: string;
 };
 
-const Renderer = ({ body }: Props) => {
+const Renderer = ({ value }: Props) => {
   const [isEmpty, setIsEmpty] = useState(false);
   const rendererRef = useRef<HTMLDivElement>(null);
 
@@ -23,7 +22,7 @@ const Renderer = ({ body }: Props) => {
 
     quill.enable(false);
 
-    const contents = JSON.parse(body);
+    const contents = JSON.parse(value);
     quill.setContents(contents);
 
     const isEmpty =
@@ -39,7 +38,7 @@ const Renderer = ({ body }: Props) => {
     return () => {
       if (container) container.innerHTML = "";
     };
-  }, [body]);
+  }, [value]);
 
   if (isEmpty) return null;
 
