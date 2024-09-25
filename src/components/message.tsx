@@ -1,6 +1,7 @@
 "use client";
 
 import Hint from "@/components/hint";
+import Thumbnail from "@/components/thumbnail";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { format, isToday, isYesterday } from "date-fns";
 import dynamic from "next/dynamic";
@@ -102,6 +103,7 @@ const Message = ({
             </Hint>
           </div>
           <Renderer value={body} />
+          <Thumbnail url={image} />
           {updatedAt ? (
             <span className="text-xs text-muted-foreground">(edited)</span>
           ) : null}
