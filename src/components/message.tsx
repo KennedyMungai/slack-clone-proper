@@ -2,11 +2,14 @@
 
 import Hint from "@/components/hint";
 import Thumbnail from "@/components/thumbnail";
+import Toolbar from "@/components/toolbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUpdateMessage } from "@/features/messages/api/use-update-message";
 import { format, isToday, isYesterday } from "date-fns";
 import dynamic from "next/dynamic";
+import { toast } from "sonner";
 import { Doc, Id } from "../../convex/_generated/dataModel";
-import Toolbar from "@/components/toolbar";
+import { cn } from "@/lib/utils";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 
@@ -27,7 +30,7 @@ type Props = {
   updatedAt: Doc<"messages">["updatedAt"];
   createdAt: Doc<"messages">["_creationTime"];
   isEditing: boolean;
-  setEditing: (id: Id<"messages"> | null) => void;
+  setEditingId: (id: Id<"messages"> | null) => void;
   isCompact?: boolean;
   hideThreadButton?: boolean;
   threadCount?: number;
@@ -51,12 +54,30 @@ const Message = ({
   isEditing,
   memberId,
   reactions,
-  setEditing,
+  setEditingId,
   threadCount,
   threadTimestamp,
   updatedAt,
   threadImage,
 }: Props) => {
+  const { mutate: updateMessage, isPending: isUpdatingMessage } =
+    useUpdateMessage();
+
+  const isPending = isUpdatingMessage;
+
+  const handleUpdate = ({ body }: { body: string }) => {
+    updateMessage(
+      { id, body },
+      {
+        onSuccess: () => {
+          toast.success("Message updated");
+          setEditingId(null);
+        },
+        onError: () => toast.error("Failed to update message"),
+      },
+    );
+  };
+
   if (isCompact) {
     return (
       <div className="group relative flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60">
@@ -78,7 +99,7 @@ const Message = ({
           <Toolbar
             isAuthor={isAuthor}
             isPending={false}
-            handleEdit={() => setEditing(id)}
+            handleEdit={() => setEditingId(id)}
             handleThread={() => {}}
             handleDelete={() => {}}
             handleReaction={() => {}}
@@ -90,7 +111,12 @@ const Message = ({
   }
 
   return (
-    <div className="group relative flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60">
+    <div
+      className={cn(
+        "group relative flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60",
+        isEditing && "bg-[#f2c74433] hover:bg-[#f2c74433]",
+      )}
+    >
       <div className="flex items-start gap-2">
         <button>
           <Avatar className="mr-1">
@@ -126,7 +152,7 @@ const Message = ({
         <Toolbar
           isAuthor={isAuthor}
           isPending={false}
-          handleEdit={() => setEditing(id)}
+          handleEdit={() => setEditingId(id)}
           handleThread={() => {}}
           handleDelete={() => {}}
           handleReaction={() => {}}
