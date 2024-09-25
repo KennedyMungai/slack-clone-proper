@@ -6,6 +6,7 @@ import Toolbar from "@/components/toolbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRemoveMessage } from "@/features/messages/api/use-remove-message";
 import { useUpdateMessage } from "@/features/messages/api/use-update-message";
+import { useToggleReaction } from "@/features/reactions/api/use-toggle-reaction";
 import useConfirm from "@/hooks/use-confirm";
 import { cn } from "@/lib/utils";
 import { format, isToday, isYesterday } from "date-fns";
@@ -69,7 +70,11 @@ const Message = ({
   const { mutate: removeMessage, isPending: isRemovingMessage } =
     useRemoveMessage();
 
-  const isPending = isUpdatingMessage || isRemovingMessage;
+  const { mutate: toggleReaction, isPending: isTogglingReaction } =
+    useToggleReaction();
+
+  const isPending =
+    isUpdatingMessage || isRemovingMessage || isTogglingReaction;
 
   const [ConfirmDialog, confirm] = useConfirm({
     title: "Are you sure?",
@@ -106,6 +111,12 @@ const Message = ({
       },
     );
   };
+
+  const handleReaction = (value: string) =>
+    toggleReaction(
+      { messageId: id, value },
+      { onError: () => toast.error("Failed to toggle reaction") },
+    );
 
   if (isCompact) {
     return (
@@ -153,7 +164,7 @@ const Message = ({
               handleEdit={() => setEditingId(id)}
               handleThread={() => {}}
               handleDelete={handleRemove}
-              handleReaction={() => {}}
+              handleReaction={handleReaction}
               hideThreadButton={hideThreadButton}
             />
           )}
@@ -223,7 +234,7 @@ const Message = ({
             handleEdit={() => setEditingId(id)}
             handleThread={() => {}}
             handleDelete={handleRemove}
-            handleReaction={() => {}}
+            handleReaction={handleReaction}
             hideThreadButton={hideThreadButton}
           />
         )}
