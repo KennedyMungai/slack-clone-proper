@@ -5,11 +5,11 @@ import Thumbnail from "@/components/thumbnail";
 import Toolbar from "@/components/toolbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUpdateMessage } from "@/features/messages/api/use-update-message";
+import { cn } from "@/lib/utils";
 import { format, isToday, isYesterday } from "date-fns";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { Doc, Id } from "../../convex/_generated/dataModel";
-import { cn } from "@/lib/utils";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
@@ -81,20 +81,37 @@ const Message = ({
 
   if (isCompact) {
     return (
-      <div className="group relative flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60">
+      <div
+        className={cn(
+          "group relative flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60",
+          isEditing && "bg-[#f2c74433] hover:bg-[#f2c74433]",
+        )}
+      >
         <div className="ml-2 flex items-start gap-2">
           <Hint label={formatFullTime(new Date(createdAt))}>
             <button className="w-[40px] text-center text-xs leading-[22px] text-muted-foreground opacity-0 hover:underline group-hover:opacity-100">
               {format(new Date(createdAt), "hh:mm")}
             </button>
           </Hint>
-          <div className="flex w-full flex-col">
-            <Renderer value={body} />
-            <Thumbnail url={image} />
-            {updatedAt ? (
-              <span className="text-xs text-muted-foreground">(edited)</span>
-            ) : null}
-          </div>
+          {isEditing ? (
+            <div className="size-full">
+              <Editor
+                variant="update"
+                onSubmit={handleUpdate}
+                disabled={isPending}
+                defaultValue={JSON.parse(body)}
+                onCancel={() => setEditingId(null)}
+              />
+            </div>
+          ) : (
+            <div className="flex w-full flex-col">
+              <Renderer value={body} />
+              <Thumbnail url={image} />
+              {updatedAt ? (
+                <span className="text-xs text-muted-foreground">(edited)</span>
+              ) : null}
+            </div>
+          )}
         </div>
         {!isEditing && (
           <Toolbar
