@@ -10,6 +10,7 @@ import { format, isToday, isYesterday } from "date-fns";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { Doc, Id } from "../../convex/_generated/dataModel";
+import { useRemoveMessage } from "@/features/messages/api/use-remove-message";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
@@ -64,7 +65,10 @@ const Message = ({
   const { mutate: updateMessage, isPending: isUpdatingMessage } =
     useUpdateMessage();
 
-  const isPending = isUpdatingMessage;
+  const { mutate: removeMessage, isPending: isRemovingMessage } =
+    useRemoveMessage();
+
+  const isPending = isUpdatingMessage || isRemovingMessage;
 
   const handleUpdate = ({ body }: { body: string }) => {
     updateMessage(
