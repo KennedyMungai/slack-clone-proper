@@ -38,21 +38,27 @@ const Toolbar = ({
             <SmileIcon className="size-5" />
           </Button>
         </EmojiPopover>
-        <Hint label={"Reply in thread"}>
-          <Button variant={"ghost"} size={"icon"} disabled={isPending}>
-            <MessageSquareTextIcon className="size-5" />
-          </Button>
-        </Hint>
-        <Hint label={"Edit Message"}>
-          <Button variant={"ghost"} size={"icon"} disabled={isPending}>
-            <PencilIcon className="size-5" />
-          </Button>
-        </Hint>
-        <Hint label={"Delete Message"}>
-          <Button variant={"ghost"} size={"icon"} disabled={isPending}>
-            <TrashIcon className="size-5" />
-          </Button>
-        </Hint>
+        {!hideThreadButton && (
+          <Hint label={"Reply in thread"}>
+            <Button variant={"ghost"} size={"icon"} disabled={isPending}>
+              <MessageSquareTextIcon className="size-5" />
+            </Button>
+          </Hint>
+        )}
+        {isAuthor && (
+          <Hint label={"Edit Message"}>
+            <Button variant={"ghost"} size={"icon"} disabled={isPending}>
+              <PencilIcon className="size-5" />
+            </Button>
+          </Hint>
+        )}
+        {isAuthor && (
+          <Hint label={"Delete Message"}>
+            <Button variant={"ghost"} size={"icon"} disabled={isPending}>
+              <TrashIcon className="size-5" />
+            </Button>
+          </Hint>
+        )}
       </div>
     </div>
   );
