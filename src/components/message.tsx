@@ -12,6 +12,7 @@ import { Doc, Id } from "../../convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
+const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
 
 type Props = {
   id: Id<"messages">;
