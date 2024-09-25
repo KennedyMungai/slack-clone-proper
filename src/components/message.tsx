@@ -4,14 +4,14 @@ import Hint from "@/components/hint";
 import Thumbnail from "@/components/thumbnail";
 import Toolbar from "@/components/toolbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useRemoveMessage } from "@/features/messages/api/use-remove-message";
 import { useUpdateMessage } from "@/features/messages/api/use-update-message";
+import useConfirm from "@/hooks/use-confirm";
 import { cn } from "@/lib/utils";
 import { format, isToday, isYesterday } from "date-fns";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { Doc, Id } from "../../convex/_generated/dataModel";
-import { useRemoveMessage } from "@/features/messages/api/use-remove-message";
-import useConfirm from "@/hooks/use-confirm";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
@@ -89,6 +89,24 @@ const Message = ({
     );
   };
 
+  const handleRemove = async () => {
+    const ok = await confirm();
+
+    if (!ok) return;
+
+    removeMessage(
+      { id },
+      {
+        onSuccess: () => {
+          toast.success("Message deleted");
+
+          //   TODO: Close thread if opened
+        },
+        onError: () => toast.error("Failed to delete message"),
+      },
+    );
+  };
+
   if (isCompact) {
     return (
       <div
@@ -128,7 +146,7 @@ const Message = ({
             isAuthor={isAuthor}
             isPending={false}
             handleEdit={() => setEditingId(id)}
-            handleThread={() => {}}
+            handleThread={handleRemove}
             handleDelete={() => {}}
             handleReaction={() => {}}
             hideThreadButton={hideThreadButton}
@@ -194,7 +212,7 @@ const Message = ({
           isPending={isPending}
           handleEdit={() => setEditingId(id)}
           handleThread={() => {}}
-          handleDelete={() => {}}
+          handleDelete={handleRemove}
           handleReaction={() => {}}
           hideThreadButton={hideThreadButton}
         />
