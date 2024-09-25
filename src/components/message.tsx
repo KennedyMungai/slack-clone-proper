@@ -97,6 +97,9 @@ const Message = ({
             </Hint>
           </div>
           <Renderer value={body} />
+          {updatedAt ? (
+            <span className="text-xs text-muted-foreground">(edited)</span>
+          ) : null}
         </div>
       </div>
     </div>
