@@ -47,14 +47,24 @@ const Toolbar = ({
         )}
         {isAuthor && (
           <Hint label={"Edit Message"}>
-            <Button variant={"ghost"} size={"icon"} disabled={isPending}>
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              disabled={isPending}
+              onClick={handleEdit}
+            >
               <PencilIcon className="size-5" />
             </Button>
           </Hint>
         )}
         {isAuthor && (
           <Hint label={"Delete Message"}>
-            <Button variant={"ghost"} size={"icon"} disabled={isPending}>
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              disabled={isPending}
+              onClick={handleDelete}
+            >
               <TrashIcon className="size-5" />
             </Button>
           </Hint>
