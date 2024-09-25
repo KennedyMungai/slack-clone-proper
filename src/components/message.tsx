@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { Doc, Id } from "../../convex/_generated/dataModel";
 
-const Renderer = dynamic(() => import("@/components/renderer"));
+const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 
 type Props = {
   id: Id<"messages">;
