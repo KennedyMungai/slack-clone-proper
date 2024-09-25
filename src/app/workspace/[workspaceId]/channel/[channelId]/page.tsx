@@ -16,7 +16,6 @@ const ChannelPage = () => {
     id: channelId,
   });
 
-  console.log(results);
 
   if (isChannelLoading || status === "LoadingFirstPage") {
     return (
