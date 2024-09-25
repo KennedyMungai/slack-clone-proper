@@ -127,27 +127,39 @@ const Message = ({
             </AvatarFallback>
           </Avatar>
         </button>
-        <div className="flex w-full flex-col overflow-hidden">
-          <div className="text-sm">
-            <button
-              className="font-bold text-primary hover:underline"
-              onClick={() => {}}
-            >
-              {authorName}
-            </button>
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <Hint label={formatFullTime(new Date(createdAt))}>
-              <button className="text-xs text-muted-foreground hover:underline">
-                {format(new Date(createdAt), "h:mm a")}
-              </button>
-            </Hint>
+        {isEditing ? (
+          <div className="size-full">
+            <Editor
+              variant="update"
+              onSubmit={handleUpdate}
+              disabled={isUpdatingMessage}
+              defaultValue={JSON.parse(body)}
+              onCancel={() => setEditingId(null)}
+            />
           </div>
-          <Renderer value={body} />
-          <Thumbnail url={image} />
-          {updatedAt ? (
-            <span className="text-xs text-muted-foreground">(edited)</span>
-          ) : null}
-        </div>
+        ) : (
+          <div className="flex w-full flex-col overflow-hidden">
+            <div className="text-sm">
+              <button
+                className="font-bold text-primary hover:underline"
+                onClick={() => {}}
+              >
+                {authorName}
+              </button>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <Hint label={formatFullTime(new Date(createdAt))}>
+                <button className="text-xs text-muted-foreground hover:underline">
+                  {format(new Date(createdAt), "h:mm a")}
+                </button>
+              </Hint>
+            </div>
+            <Renderer value={body} />
+            <Thumbnail url={image} />
+            {updatedAt ? (
+              <span className="text-xs text-muted-foreground">(edited)</span>
+            ) : null}
+          </div>
+        )}
       </div>
       {!isEditing && (
         <Toolbar
