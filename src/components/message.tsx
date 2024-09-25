@@ -114,6 +114,8 @@ const Message = ({
           className={cn(
             "group relative flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60",
             isEditing && "bg-[#f2c74433] hover:bg-[#f2c74433]",
+            isRemovingMessage &&
+              "origin-bottom scale-y-0 transform bg-rose-500/50 transition-all duration-200",
           )}
         >
           <div className="ml-2 flex items-start gap-2">
@@ -167,6 +169,8 @@ const Message = ({
         className={cn(
           "group relative flex flex-col gap-2 p-1.5 px-5 hover:bg-gray-100/60",
           isEditing && "bg-[#f2c74433] hover:bg-[#f2c74433]",
+          isRemovingMessage &&
+            "origin-bottom scale-y-0 transform bg-rose-500/50 transition-all duration-200",
         )}
       >
         <div className="flex items-start gap-2">
