@@ -67,6 +67,7 @@ const Message = ({
           </Hint>
           <div className="flex w-full flex-col">
             <Renderer value={body} />
+            <Thumbnail url={image} />
             {updatedAt ? (
               <span className="text-xs text-muted-foreground">(edited)</span>
             ) : null}
