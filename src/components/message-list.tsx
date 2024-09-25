@@ -87,7 +87,7 @@ const MessageList = ({
                 isEditing={false}
                 setEditing={() => {}}
                 isCompact={isCompact}
-                hideThreadButton={false}
+                hideThreadButton={variant === "thread"}
                 threadCount={message.threadCount}
                 threadImage={message.threadImage}
                 threadTimestamp={message.threadTimestamp}
