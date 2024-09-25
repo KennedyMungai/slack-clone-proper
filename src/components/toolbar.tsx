@@ -1,13 +1,22 @@
 type Props = {
   isAuthor: boolean;
   isPending: boolean;
-  handleEditing: () => void;
+  handleEdit: () => void;
   handleThread: () => void;
   handleDelete: () => void;
-  hideThreadButton: boolean;
+  handleReaction: (value: string) => void;
+  hideThreadButton?: boolean;
 };
 
-const Toolbar = ({handleDelete, handleEditing, handleThread, hideThreadButton, isAuthor, isPending}: Props) => {
+const Toolbar = ({
+  handleDelete,
+  handleEdit,
+  handleThread,
+  hideThreadButton,
+  isAuthor,
+  isPending,
+  handleReaction,
+}: Props) => {
   return <div>Toolbar</div>;
 };
 

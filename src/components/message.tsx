@@ -118,6 +118,7 @@ const Message = ({
           handleEdit={() => setEditing(id)}
           handleThread={() => {}}
           handleDelete={() => {}}
+          handleReaction={() => {}}
           hideThreadButton={hideThreadButton}
         />
       )}
