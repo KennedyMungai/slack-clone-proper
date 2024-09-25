@@ -18,7 +18,7 @@ const HomePage = () => {
     if (isLoading) return;
 
     if (workspaceId) router.replace(`/workspace/${workspaceId}`);
-    else if (!open) setOpen(true);
+    else if (!open && !isLoading) setOpen(true);
   }, [isLoading, workspaceId, open, setOpen, router]);
 
   return <main className="h-full"></main>;
