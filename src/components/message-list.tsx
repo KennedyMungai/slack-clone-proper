@@ -1,6 +1,7 @@
 import { GetMessagesReturnType } from "@/features/messages/api/use-get-messages";
 import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
 import Message from "@/components/message";
+import ChannelHero from "@/components/channel-hero";
 
 type Props = {
   channelName?: string;
@@ -95,6 +96,9 @@ const MessageList = ({
           })}
         </div>
       ))}
+      {variant === "channel" && channelName && channelCreationTime && (
+        <ChannelHero name={channelName} creationTime={channelCreationTime} />
+      )}
     </div>
   );
 };
