@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { Doc, Id } from "../../convex/_generated/dataModel";
 import { useRemoveMessage } from "@/features/messages/api/use-remove-message";
+import useConfirm from "@/hooks/use-confirm";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
@@ -69,6 +70,11 @@ const Message = ({
     useRemoveMessage();
 
   const isPending = isUpdatingMessage || isRemovingMessage;
+
+  const [ConfirmDialog, confirm] = useConfirm({
+    title: "Are you sure?",
+    message: "Deleting a message cannot be undone",
+  });
 
   const handleUpdate = ({ body }: { body: string }) => {
     updateMessage(
