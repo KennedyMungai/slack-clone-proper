@@ -221,6 +221,25 @@ const Thread = ({ messageId, onClose }: Props) => {
             })}
           </div>
         ))}
+        <div
+          className="h-1"
+          ref={(el) => {
+            if (el) {
+              const observer = new IntersectionObserver(
+                ([entry]) => {
+                  if (entry.isIntersecting && canLoadMore) {
+                    loadMore();
+                  }
+                },
+                { threshold: 1.0 },
+              );
+
+              observer.observe(el);
+
+              return () => observer.disconnect();
+            }
+          }}
+        />
         <Message
           hideThreadButton
           memberId={message!.memberId}
