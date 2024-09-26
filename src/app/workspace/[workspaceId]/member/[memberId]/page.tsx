@@ -4,19 +4,30 @@ import { useCreateOrGetConversation } from "@/features/conversations/api/use-cre
 import { useMemberId } from "@/hooks/use-member-id";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { AlertTriangleIcon, LoaderIcon } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { Id } from "../../../../../../convex/_generated/dataModel";
 
 const MemberPage = () => {
   const workspaceId = useWorkspaceId();
   const memberId = useMemberId();
 
+  const [conversationId, setConversationId] =
+    useState<Id<"conversations"> | null>(null);
+
   const { data, mutate, isPending } = useCreateOrGetConversation();
 
   useEffect(() => {
-    mutate({
-      workspaceId,
-      memberId,
-    });
+    mutate(
+      {
+        workspaceId,
+        memberId,
+      },
+      {
+        onSuccess: (data) => setConversationId(data),
+        onError: () => toast.error("Failed to create or get conversation"),
+      },
+    );
   }, [mutate, memberId, workspaceId]);
 
   if (isPending) {
@@ -27,7 +38,7 @@ const MemberPage = () => {
     );
   }
 
-  if (!data) {
+  if (!conversationId) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-y-2">
         <AlertTriangleIcon className="size-5 text-muted-foreground" />
@@ -38,7 +49,7 @@ const MemberPage = () => {
     );
   }
 
-  return <div>{JSON.stringify(data)}</div>;
+  return <div>{JSON.stringify(conversationId)}</div>;
 };
 
 export default MemberPage;
