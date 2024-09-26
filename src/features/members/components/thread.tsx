@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useCreateMessage } from "@/features/messages/api/use-create-message";
 import { useGetMessage } from "@/features/messages/api/use-get-message";
+import { useGetMessages } from "@/features/messages/api/use-get-messages";
 import { useGenerateUploadUrl } from "@/features/upload/api/use-generate-upload-url";
 import { useChannelId } from "@/hooks/use-channel-id";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
 import { LoaderIcon, TriangleAlertIcon, XIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import Quill from "quill";
@@ -30,6 +32,17 @@ type CreateMessageValues = {
   image: Id<"_storage"> | undefined;
 };
 
+const formatDateLabel = (dateStr: string) => {
+  const date = new Date(dateStr);
+
+  if (isToday(date)) return "Today";
+  if (isYesterday(date)) return "Yesterday";
+
+  return format(date, "EEEE, MMMM d");
+};
+
+const TIME_THRESHOLD = 5;
+
 const Thread = ({ messageId, onClose }: Props) => {
   const workspaceId = useWorkspaceId();
   const channelId = useChannelId();
@@ -50,7 +63,19 @@ const Thread = ({ messageId, onClose }: Props) => {
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
     useCurrentMember({ workspaceId });
 
-  if (isLoadingMessage || isLoadingCurrentMember) {
+  const { results, status, loadMore } = useGetMessages({
+    channelId,
+    parentMessageId: messageId,
+  });
+
+  const canLoadMore = status === "CanLoadMore";
+  const isLoadingMore = status === "LoadingMore";
+
+  if (
+    isLoadingMessage ||
+    isLoadingCurrentMember ||
+    status === "LoadingFirstPage"
+  ) {
     return (
       <div className="flex h-full flex-col">
         <div className="flex h-[49px] items-center justify-between border-b px-4">
@@ -80,6 +105,20 @@ const Thread = ({ messageId, onClose }: Props) => {
       </div>
     </div>;
   }
+
+  const groupedMessages = results?.reduce(
+    (groups, message) => {
+      const date = new Date(message._creationTime);
+      const dateKey = format(date, "yyyy-MM-dd");
+
+      if (!groups[dateKey]) groups[dateKey] = [];
+
+      groups[dateKey].unshift(message);
+
+      return groups;
+    },
+    {} as Record<string, typeof results>,
+  );
 
   const handleSubmit = async ({
     body,
@@ -138,7 +177,50 @@ const Thread = ({ messageId, onClose }: Props) => {
           <XIcon className="size-5 stroke-[1.5]" />
         </Button>
       </div>
-      <div>
+      <div className="messages-scrollbar flex flex-1 flex-col-reverse overflow-y-auto pb-4">
+        {Object.entries(groupedMessages || {}).map(([dateKey, messages]) => (
+          <div key={dateKey}>
+            <div className="relative my-2 text-center">
+              <hr className="absolute left-0 right-0 top-1/2 border-t border-gray-300" />
+              <span className="relative inline-block rounded-full border border-gray-300 bg-white px-4 py-1 text-xs shadow-sm">
+                {formatDateLabel(dateKey)}
+              </span>
+            </div>
+            {messages.map((message, index) => {
+              const prevMessage = messages[index - 1];
+              const isCompact =
+                prevMessage &&
+                prevMessage.user._id === message.user._id &&
+                differenceInMinutes(
+                  new Date(message._creationTime),
+                  new Date(prevMessage._creationTime),
+                ) < TIME_THRESHOLD;
+
+              return (
+                <Message
+                  key={message._id}
+                  id={message._id}
+                  memberId={message.memberId}
+                  authorImage={message.user.image}
+                  authorName={message.user.name}
+                  isAuthor={message.memberId === currentMember?._id}
+                  reactions={message.reactions}
+                  body={message.body}
+                  image={message.image}
+                  updatedAt={message.updatedAt}
+                  createdAt={message._creationTime}
+                  isEditing={editingId === message._id}
+                  setEditingId={setEditingId}
+                  isCompact={isCompact}
+                  hideThreadButton
+                  threadCount={message.threadCount}
+                  threadImage={message.threadImage}
+                  threadTimestamp={message.threadTimestamp}
+                />
+              );
+            })}
+          </div>
+        ))}
         <Message
           hideThreadButton
           memberId={message!.memberId}
