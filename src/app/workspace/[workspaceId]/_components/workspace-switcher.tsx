@@ -40,7 +40,7 @@ const WorkspaceSwitcher = () => {
           disabled={isWorkspacesLoading || isWorkspaceLoading}
         >
           {isWorkspaceLoading ? (
-            <LoaderIcon className="size-5 shrink-0 animate-spin" />
+            <LoaderIcon className="size-5 shrink-0 animate-spin text-muted-foreground" />
           ) : (
             workspace?.name.charAt(0).toUpperCase()
           )}
