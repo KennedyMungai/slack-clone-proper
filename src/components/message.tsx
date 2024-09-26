@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { Doc, Id } from "../../convex/_generated/dataModel";
 import Reactions from "./reactions";
+import { usePanel } from "@/hooks/use-panel";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
@@ -65,6 +66,8 @@ const Message = ({
   updatedAt,
   threadImage,
 }: Props) => {
+  const { onOpenMessage, onClose, parentMessageId } = usePanel();
+
   const { mutate: updateMessage, isPending: isUpdatingMessage } =
     useUpdateMessage();
 
@@ -106,7 +109,7 @@ const Message = ({
         onSuccess: () => {
           toast.success("Message deleted");
 
-          //   TODO: Close thread if opened
+          if (parentMessageId === id) onClose();
         },
         onError: () => toast.error("Failed to delete message"),
       },
@@ -164,7 +167,7 @@ const Message = ({
               isAuthor={isAuthor}
               isPending={false}
               handleEdit={() => setEditingId(id)}
-              handleThread={() => {}}
+              handleThread={() => onOpenMessage(id)}
               handleDelete={handleRemove}
               handleReaction={handleReaction}
               hideThreadButton={hideThreadButton}
@@ -235,7 +238,7 @@ const Message = ({
             isAuthor={isAuthor}
             isPending={isPending}
             handleEdit={() => setEditingId(id)}
-            handleThread={() => {}}
+            handleThread={() => onOpenMessage(id)}
             handleDelete={handleRemove}
             handleReaction={handleReaction}
             hideThreadButton={hideThreadButton}
