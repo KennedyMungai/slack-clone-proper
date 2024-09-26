@@ -106,7 +106,7 @@ const WorkspaceSidebar = () => {
             id={memberItem._id}
             image={memberItem.user.image}
             label={memberItem.user.name}
-            variant="active"
+            variant="default"
           />
         ))}
       </WorkspaceSection>
