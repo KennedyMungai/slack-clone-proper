@@ -7,10 +7,10 @@ type Props = {
       memberIds: Id<"members">[];
     }
   >;
-  onReactionChange: (value: string) => void;
+  onChange: (value: string) => void;
 };
 
-const Reactions = ({ onReactionChange, data }: Props) => {
+const Reactions = ({ onChange, data }: Props) => {
   return <div>Reactions</div>;
 };
 
