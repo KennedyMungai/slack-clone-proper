@@ -32,11 +32,18 @@ const Reactions = ({ onChange, data }: Props) => {
           className={cn(
             "flex h-6 items-center gap-x-1 rounded-full border border-transparent bg-slate-200/70 p-2 text-slate-800",
             reaction.memberIds.includes(currentMemberId) &&
-              "border-blue-500 bg-blue-100/70 text-blue-500",
+              "border-blue-500 bg-blue-100/70 text-white",
           )}
         >
           {reaction.value}
-          <span>{reaction.count}</span>
+          <span
+            className={cn(
+              "text-xs font-semibold text-muted-foreground",
+              reaction.memberIds.includes(currentMemberId) && "text-blue-500",
+            )}
+          >
+            {reaction.count}
+          </span>
         </button>
       ))}
     </div>
