@@ -39,10 +39,10 @@ const Thread = ({ messageId, onClose }: Props) => {
           <XIcon className="size-5 stroke-[1.5]" />
         </Button>
       </div>
-      <div className="flex h-full flex-col items-center justify-center gap-y-2">
+      <div className="flex h-full flex-col items-center justify-center">
         <TriangleAlertIcon className="size-5 text-muted-foreground" />
+        <p className="text-sm text-muted-foreground">Message not found</p>
       </div>
-      <p className="text-sm text-muted-foreground">Message not found</p>
     </div>;
   }
 
