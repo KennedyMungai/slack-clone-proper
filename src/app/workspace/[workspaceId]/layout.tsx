@@ -5,12 +5,14 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import Thread from "@/features/members/components/thread";
 import { usePanel } from "@/hooks/use-panel";
+import { LoaderIcon } from "lucide-react";
 import { ReactNode } from "react";
+import { Id } from "../../../../convex/_generated/dataModel";
 import Sidebar from "./_components/sidebar";
 import Toolbar from "./_components/toolbar";
 import WorkspaceSidebar from "./_components/workspace-sidebar";
-import { LoaderIcon } from "lucide-react";
 
 type Props = {
   children: ReactNode;
@@ -47,7 +49,10 @@ const WorkspaceLayout = ({ children }: Props) => {
               <ResizableHandle withHandle />
               <ResizablePanel minSize={20} defaultSize={29}>
                 {parentMessageId ? (
-                  <div>Thread</div>
+                  <Thread
+                    messageId={parentMessageId as Id<"messages">}
+                    onClose={onClose}
+                  />
                 ) : (
                   <div className="flex size-full items-center justify-center">
                     <LoaderIcon className="size-5 animate-spin text-muted-foreground" />
