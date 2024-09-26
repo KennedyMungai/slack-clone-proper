@@ -27,7 +27,7 @@ const ThreadBar = ({ count, timestamp, image, onClick }: Props) => {
         <span className="truncate text-xs font-bold text-sky-700 hover:underline">
           {count} {count > 1 ? "replies" : "reply"}
         </span>
-        <span className="hidden truncate text-xs text-muted-foreground group-hover/thread-bar:block">
+        <span className="block truncate text-xs text-muted-foreground group-hover/thread-bar:hidden">
           Last reply {formatDistanceToNow(timestamp, { addSuffix: true })}
         </span>
         <span className="hidden truncate text-xs text-muted-foreground group-hover/thread-bar:block">
