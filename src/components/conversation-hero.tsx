@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type Props = {
   name: string;
-  image: string;
+  image?: string;
 };
 
 const ConversationHero = ({ image, name }: Props) => {
