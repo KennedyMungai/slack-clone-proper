@@ -34,6 +34,7 @@ const Reactions = ({ onChange, data }: Props) => {
             reaction.memberIds.includes(currentMemberId) &&
               "border-blue-500 bg-blue-100/70 text-white",
           )}
+          onClick={() => onChange(reaction.value)}
         >
           {reaction.value}
           <span
