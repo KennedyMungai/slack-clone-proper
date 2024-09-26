@@ -51,6 +51,14 @@ export const getById = query({
 
     if (!member) return null;
 
+    const currentMember = await ctx.db
+      .query("members")
+      .withIndex("by_workspace_id_user_id", (q) =>
+        q.eq("workspaceId", member.workspaceId).eq("userId", userId),
+      );
+
+    if (!currentMember) return null;
+
     const user = await populateUser(ctx, member.userId);
 
     if (!user) return null;
