@@ -8,6 +8,7 @@ import { useChannelId } from "@/hooks/use-channel-id";
 import { LoaderIcon } from "lucide-react";
 import Header from "./header";
 import ChatInput from "./chat-input";
+import MessageList from "@/components/message-list";
 
 type Props = {
   id: Id<"conversations">;
@@ -38,7 +39,15 @@ const Conversation = ({ id }: Props) => {
         memberName={member?.user.name}
         onClick={() => {}}
       />
-      <div className="flex-1" />
+      <MessageList
+        data={results}
+        variant="conversation"
+        memberImage={member?.user.image}
+        memberName={member?.user.name}
+        loadMore={loadMore}
+        isLoadingMore={status === "LoadingMore"}
+        canLoadMore={status === "CanLoadMore"}
+      />
       <ChatInput
         placeholder={`Message ${member?.user.name}`}
         conversationId={id}
