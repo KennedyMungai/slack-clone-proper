@@ -10,6 +10,7 @@ import { ReactNode } from "react";
 import Sidebar from "./_components/sidebar";
 import Toolbar from "./_components/toolbar";
 import WorkspaceSidebar from "./_components/workspace-sidebar";
+import { LoaderIcon } from "lucide-react";
 
 type Props = {
   children: ReactNode;
@@ -45,7 +46,13 @@ const WorkspaceLayout = ({ children }: Props) => {
             <>
               <ResizableHandle withHandle />
               <ResizablePanel minSize={20} defaultSize={29}>
-                Load Thread
+                {parentMessageId ? (
+                  <div>Thread</div>
+                ) : (
+                  <div className="flex size-full items-center justify-center">
+                    <LoaderIcon className="size-5 animate-spin text-muted-foreground" />
+                  </div>
+                )}
               </ResizablePanel>
             </>
           )}
