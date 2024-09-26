@@ -39,10 +39,9 @@ const UserButton = () => {
       <DropdownMenuContent align="center" side="right" className="w-60">
         <DropdownMenuItem
           className="h-10"
-          onClick={() => {
-            signOut();
-            router.replace("/auth");
-          }}
+          onClick={async () =>
+            await signOut().then(() => router.replace("/auth"))
+          }
         >
           <LogOutIcon className="mr-2 size-4 p-2" /> Log Out
         </DropdownMenuItem>
