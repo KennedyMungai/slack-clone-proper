@@ -4,7 +4,9 @@ import Hint from "@/components/hint";
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { cn } from "@/lib/utils";
+import { MdOutlineAddReaction } from "react-icons/md";
 import { Doc, Id } from "../../convex/_generated/dataModel";
+import EmojiPopover from "./emoji-popover";
 
 type Props = {
   data: Array<
@@ -52,6 +54,14 @@ const Reactions = ({ onChange, data }: Props) => {
           </button>
         </Hint>
       ))}
+      <EmojiPopover
+        hint="Add Reaction"
+        onEmojiSelect={(emoji) => onChange(emoji.native)}
+      >
+        <button className="flex h-7 items-center gap-x-1 rounded-full border border-transparent bg-slate-200/70 px-3 text-slate-800 hover:border-slate-500">
+          <MdOutlineAddReaction className="size-5 text-blue-700/70" />
+        </button>
+      </EmojiPopover>
     </div>
   );
 };
