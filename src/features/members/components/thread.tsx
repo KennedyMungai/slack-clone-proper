@@ -2,11 +2,12 @@
 
 import Message from "@/components/message";
 import { Button } from "@/components/ui/button";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetMessage } from "@/features/messages/api/use-get-message";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { LoaderIcon, TriangleAlertIcon, XIcon } from "lucide-react";
+import { useState } from "react";
 import { Id } from "../../../../convex/_generated/dataModel";
-import { useCurrentMember } from "@/features/members/api/use-current-member";
 
 type Props = {
   messageId: Id<"messages">;
@@ -15,6 +16,8 @@ type Props = {
 
 const Thread = ({ messageId, onClose }: Props) => {
   const workspaceId = useWorkspaceId();
+
+  const [editingId, setEditingId] = useState<Id<"messages"> | null>(null);
 
   const { data: message, isLoading: isLoadingMessage } = useGetMessage({
     id: messageId,
@@ -75,8 +78,8 @@ const Thread = ({ messageId, onClose }: Props) => {
           updatedAt={message?.updatedAt}
           id={message!._id}
           reactions={message!.reactions}
-          isEditing={false}
-          setEditingId={() => {}}
+          isEditing={editingId === message!._id}
+          setEditingId={setEditingId}
         />
       </div>
     </div>
