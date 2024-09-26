@@ -1,9 +1,13 @@
-type Props = {
-  params: { workspaceId: string; memberId: string };
-};
+"use client";
 
-const MemberPage = ({ params: { memberId, workspaceId } }: Props) => {
-  return <div>MemberPage</div>;
+import { useMemberId } from "@/hooks/use-member-id";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
+
+const MemberPage = () => {
+  const workspaceId = useWorkspaceId();
+  const memberId = useMemberId();
+
+  return <div>{JSON.stringify({ workspaceId, memberId })}</div>;
 };
 
 export default MemberPage;
