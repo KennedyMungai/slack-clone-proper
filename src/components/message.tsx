@@ -154,6 +154,7 @@ const Message = ({
                     (edited)
                   </span>
                 ) : null}
+                {JSON.stringify(reactions)}
               </div>
             )}
           </div>
@@ -224,6 +225,7 @@ const Message = ({
               {updatedAt ? (
                 <span className="text-xs text-muted-foreground">(edited)</span>
               ) : null}
+              {JSON.stringify(reactions)}
             </div>
           )}
         </div>
