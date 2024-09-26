@@ -1,5 +1,8 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDistanceToNow } from "date-fns";
+import { ChevronRightIcon } from "lucide-react";
 
 type Props = {
   count?: number;
@@ -27,7 +30,11 @@ const ThreadBar = ({ count, timestamp, image, onClick }: Props) => {
         <span className="hidden truncate text-xs text-muted-foreground group-hover/thread-bar:block">
           Last reply {formatDistanceToNow(timestamp, { addSuffix: true })}
         </span>
+        <span className="hidden truncate text-xs text-muted-foreground group-hover/thread-bar:block">
+          View thread
+        </span>
       </div>
+      <ChevronRightIcon className="ml-auto size-4 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover/thread-bar:opacity-100" />
     </button>
   );
 };
