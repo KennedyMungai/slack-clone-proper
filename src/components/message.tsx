@@ -164,7 +164,7 @@ const Message = ({
                   count={threadCount}
                   image={threadImage}
                   timestamp={threadTimestamp}
-                  onClick={() => {}}
+                  onClick={() => onOpenMessage(id)}
                 />
               </div>
             )}
@@ -241,7 +241,7 @@ const Message = ({
                 count={threadCount}
                 image={threadImage}
                 timestamp={threadTimestamp}
-                onClick={() => {}}
+                onClick={() => onOpenMessage(id)}
               />
             </div>
           )}
