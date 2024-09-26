@@ -1,10 +1,12 @@
 "use client";
 
+import Message from "@/components/message";
 import { Button } from "@/components/ui/button";
 import { useGetMessage } from "@/features/messages/api/use-get-message";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { LoaderIcon, TriangleAlertIcon, XIcon } from "lucide-react";
 import { Id } from "../../../../convex/_generated/dataModel";
-import Message from "@/components/message";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 
 type Props = {
   messageId: Id<"messages">;
@@ -12,11 +14,16 @@ type Props = {
 };
 
 const Thread = ({ messageId, onClose }: Props) => {
+  const workspaceId = useWorkspaceId();
+
   const { data: message, isLoading: isLoadingMessage } = useGetMessage({
     id: messageId,
   });
 
-  if (isLoadingMessage) {
+  const { data: currentMember, isLoading: isLoadingCurrentMember } =
+    useCurrentMember({ workspaceId });
+
+  if (isLoadingMessage || isLoadingCurrentMember) {
     return (
       <div className="flex h-full flex-col">
         <div className="flex h-[49px] items-center justify-between border-b px-4">
@@ -61,7 +68,7 @@ const Thread = ({ messageId, onClose }: Props) => {
           memberId={message!.memberId}
           authorImage={message!.user.image}
           authorName={message!.user.name}
-          isAuthor={false}
+          isAuthor={message!.memberId === currentMember?._id}
           body={message!.body}
           image={message!.image}
           createdAt={message!._creationTime}
