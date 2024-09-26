@@ -240,6 +240,14 @@ const Thread = ({ messageId, onClose }: Props) => {
             }
           }}
         />
+        {isLoadingMore && (
+          <div className="relative my-2 text-center">
+            <hr className="absolute left-0 right-0 top-1/2 border-t border-gray-300" />
+            <span className="relative inline-block rounded-full border border-gray-300 bg-white px-4 py-1 text-xs shadow-sm">
+              <LoaderIcon className="size-5 animate-spin text-muted-foreground" />
+            </span>
+          </div>
+        )}
         <Message
           hideThreadButton
           memberId={message!.memberId}
