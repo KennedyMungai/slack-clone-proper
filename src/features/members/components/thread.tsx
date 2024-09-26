@@ -8,6 +8,9 @@ import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { LoaderIcon, TriangleAlertIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { Id } from "../../../../convex/_generated/dataModel";
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
 
 type Props = {
   messageId: Id<"messages">;
@@ -81,6 +84,9 @@ const Thread = ({ messageId, onClose }: Props) => {
           isEditing={editingId === message!._id}
           setEditingId={setEditingId}
         />
+      </div>
+      <div className="px-4">
+        <Editor onSubmit={() => {}} disabled={false} placeholder="Reply...." />
       </div>
     </div>
   );
