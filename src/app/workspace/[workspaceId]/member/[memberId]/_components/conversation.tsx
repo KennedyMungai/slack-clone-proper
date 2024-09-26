@@ -7,6 +7,7 @@ import { Id } from "../../../../../../../convex/_generated/dataModel";
 import { useChannelId } from "@/hooks/use-channel-id";
 import { LoaderIcon } from "lucide-react";
 import Header from "./header";
+import ChatInput from "./chat-input";
 
 type Props = {
   id: Id<"conversations">;
@@ -36,6 +37,11 @@ const Conversation = ({ id }: Props) => {
         memberImage={member?.user.image}
         memberName={member?.user.name}
         onClick={() => {}}
+      />
+      <div className="flex-1" />
+      <ChatInput
+        placeholder={`Message ${member?.user.name}`}
+        conversationId={id}
       />
     </div>
   );
