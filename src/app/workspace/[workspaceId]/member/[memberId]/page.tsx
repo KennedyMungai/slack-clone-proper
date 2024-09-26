@@ -7,6 +7,7 @@ import { AlertTriangleIcon, LoaderIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Id } from "../../../../../../convex/_generated/dataModel";
+import Conversation from "./_components/conversation";
 
 const MemberPage = () => {
   const workspaceId = useWorkspaceId();
@@ -49,7 +50,7 @@ const MemberPage = () => {
     );
   }
 
-  return <div>{JSON.stringify(conversationId)}</div>;
+  return <Conversation id={conversationId} />;
 };
 
 export default MemberPage;
