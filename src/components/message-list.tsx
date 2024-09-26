@@ -1,14 +1,15 @@
 "use client";
 
 import ChannelHero from "@/components/channel-hero";
+import ConversationHero from "@/components/conversation-hero";
 import Message from "@/components/message";
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { GetMessagesReturnType } from "@/features/messages/api/use-get-messages";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { differenceInMinutes, format, isToday, isYesterday } from "date-fns";
+import { LoaderIcon } from "lucide-react";
 import { useState } from "react";
 import { Id } from "../../convex/_generated/dataModel";
-import { LoaderIcon } from "lucide-react";
 
 type Props = {
   channelName?: string;
@@ -137,6 +138,9 @@ const MessageList = ({
       )}
       {variant === "channel" && channelName && channelCreationTime && (
         <ChannelHero name={channelName} creationTime={channelCreationTime} />
+      )}
+      {variant === "conversation" && memberName && memberImage && (
+        <ConversationHero name={memberName} image={memberImage} />
       )}
     </div>
   );
