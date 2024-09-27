@@ -69,7 +69,7 @@ const Message = ({
   threadImage,
   threadName,
 }: Props) => {
-  const { onOpenMessage, onClose, parentMessageId } = usePanel();
+  const { onOpenMessage, onClose, parentMessageId, onOpenProfile } = usePanel();
 
   const { mutate: updateMessage, isPending: isUpdatingMessage } =
     useUpdateMessage();
@@ -200,7 +200,7 @@ const Message = ({
         )}
       >
         <div className="flex items-start gap-2">
-          <button>
+          <button onClick={() => onOpenProfile(memberId)}>
             <Avatar className="mr-1">
               <AvatarImage src={authorImage} alt={authorName} />
               <AvatarFallback className="bg-sky-500 text-xs text-white">
