@@ -17,6 +17,7 @@ import {
   XIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Id } from "../../../../convex/_generated/dataModel";
 
@@ -26,6 +27,8 @@ type Props = {
 };
 
 const Profile = ({ memberId, onClose }: Props) => {
+  const router = useRouter();
+
   const [LeaveDialog, confirmLeave] = useConfirm({
     title: "Leave workspace",
     message: "Are you sure you want to leave this workspace?",
@@ -114,6 +117,7 @@ const Profile = ({ memberId, onClose }: Props) => {
       { id: memberId },
       {
         onSuccess: () => {
+          router.replace("/");
           toast.success("You left the workspace");
           onClose();
         },
