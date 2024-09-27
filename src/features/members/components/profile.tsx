@@ -16,6 +16,7 @@ import {
   XIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { Id } from "../../../../convex/_generated/dataModel";
 
 type Props = {
@@ -70,6 +71,45 @@ const Profile = ({ memberId, onClose }: Props) => {
       </div>
     </div>;
   }
+
+  const onRemove = () => {
+    removeMember(
+      { id: memberId },
+      {
+        onSuccess: () => {
+          toast.success("Member removed");
+          onClose();
+        },
+        onError: () => toast.error("Failed to remove member"),
+      },
+    );
+  };
+
+  const onLeave = () => {
+    removeMember(
+      { id: memberId },
+      {
+        onSuccess: () => {
+          toast.success("You left the workspace");
+          onClose();
+        },
+        onError: () => toast.error("Failed to leave the workspace"),
+      },
+    );
+  };
+
+  const onUpdate = (role: "admin" | "member") => {
+    updateMember(
+      { id: memberId, role },
+      {
+        onSuccess: () => {
+          toast.success("Role changed");
+          onClose();
+        },
+        onError: () => toast.error("Failed to change role"),
+      },
+    );
+  };
 
   return (
     <div className="flex h-full flex-col">
