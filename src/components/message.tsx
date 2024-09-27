@@ -42,6 +42,7 @@ type Props = {
   hideThreadButton?: boolean;
   threadCount?: number;
   threadImage?: string;
+  threadName?: string;
   threadTimestamp?: number;
 };
 
@@ -66,6 +67,7 @@ const Message = ({
   threadTimestamp,
   updatedAt,
   threadImage,
+  threadName,
 }: Props) => {
   const { onOpenMessage, onClose, parentMessageId } = usePanel();
 
