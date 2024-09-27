@@ -67,7 +67,12 @@ const Profile = ({ memberId, onClose }: Props) => {
   const { mutate: removeMember, isPending: isRemovingMember } =
     useRemoveMember();
 
-  if (isLoadingMember || isLoadingCurrentMember) {
+  if (
+    isLoadingMember ||
+    isLoadingCurrentMember ||
+    isUpdatingMember ||
+    isRemovingMember
+  ) {
     return (
       <div className="flex h-full flex-col">
         <div className="flex h-[49px] items-center justify-between border-b px-4">
