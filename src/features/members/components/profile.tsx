@@ -93,10 +93,17 @@ const Profile = ({ memberId, onClose }: Props) => {
         currentMember._id !== member?._id ? (
           <div className="mt-4 flex items-center gap-2">
             <Button variant={"outline"} className="w-full capitalize">
-              {member.role} <ChevronDownIcon className="ml-2 size-4" />
+              {member?.role} <ChevronDownIcon className="ml-2 size-4" />
             </Button>
             <Button className="w-full" variant={"outline"}>
               Remove
+            </Button>
+          </div>
+        ) : currentMember?._id === member?._id &&
+          currentMember?.role !== "admin" ? (
+          <div className="mt-4">
+            <Button variant="outline" className="w-full">
+              Leave
             </Button>
           </div>
         ) : null}
