@@ -2,9 +2,11 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { useGetMember } from "@/features/members/api/use-get-member";
-import { LoaderIcon, TriangleAlertIcon, XIcon } from "lucide-react";
+import { LoaderIcon, MailIcon, TriangleAlertIcon, XIcon } from "lucide-react";
 import { Id } from "../../../../convex/_generated/dataModel";
+import Link from "next/link";
 
 type Props = {
   memberId: Id<"members">;
@@ -62,6 +64,29 @@ const Profile = ({ memberId, onClose }: Props) => {
             {member!.user.name?.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
+      </div>
+      <div className="flex flex-col p-4">
+        <p className="text-xl font-bold">{member!.user.name!}</p>
+      </div>
+      <Separator />
+      <div className="flex flex-col p-4">
+        <p className="mb-4 text-sm font-bold">Contact Information</p>
+        <div className="flex items-center gap-2">
+          <div className="flex size-9 items-center justify-center rounded-md bg-muted">
+            <MailIcon className="size-4" />
+          </div>
+          <div className="flex flex-col">
+            <p className="text-[13px] font-semibold text-muted-foreground">
+              Email Address
+            </p>
+            <Link
+              href={`mailto:${member!.user.email}`}
+              className="text-sm text-[#1264a3] hover:underline"
+            >
+              {member!.user.email}
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
