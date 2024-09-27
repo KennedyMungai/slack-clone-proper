@@ -20,6 +20,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Id } from "../../../../convex/_generated/dataModel";
+import {
+  DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from "@/components/ui/dropdown-menu";
 
 type Props = {
   memberId: Id<"members">;
@@ -163,13 +170,33 @@ const Profile = ({ memberId, onClose }: Props) => {
           {currentMember?.role === "admin" &&
           currentMember._id !== member?._id ? (
             <div className="mt-4 flex items-center gap-2">
-              <Button
-                variant={"outline"}
-                className="w-full capitalize"
-                onClick={() => {}}
-              >
-                {member?.role} <ChevronDownIcon className="ml-2 size-4" />
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className="w-full capitalize"
+                    onClick={() => {}}
+                  >
+                    {member?.role} <ChevronDownIcon className="ml-2 size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-full">
+                  <DropdownMenuRadioGroup
+                    value={member?.role}
+                    onValueChange={(role) =>
+                      onUpdate(role as "admin" | "member")
+                    }
+                  >
+                    <DropdownMenuRadioItem value="admin">
+                      Admin
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="member">
+                      Member
+                    </DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
               <Button className="w-full" variant={"outline"} onClick={onRemove}>
                 Remove
               </Button>
