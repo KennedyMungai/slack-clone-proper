@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useGetMember } from "@/features/members/api/use-get-member";
 import { LoaderIcon, TriangleAlertIcon, XIcon } from "lucide-react";
 import { Id } from "../../../../convex/_generated/dataModel";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type Props = {
   memberId: Id<"members">;
@@ -47,12 +48,20 @@ const Profile = ({ memberId, onClose }: Props) => {
   }
 
   return (
-    <div>
+    <div className="flex h-full flex-col">
       <div className="flex h-[49px] items-center justify-between border-b px-4">
         <p className="text-lg font-bold">Profile</p>
         <Button onClick={onClose} size={"iconSm"} variant={"ghost"}>
           <XIcon className="size-5 stroke-[1.5]" />
         </Button>
+      </div>
+      <div className="flex flex-col items-center justify-center p-4">
+        <Avatar className="size-20">
+          <AvatarImage src={member!.user.image} />
+          <AvatarFallback>
+            {member!.user.name?.charAt(0).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
       </div>
     </div>
   );
