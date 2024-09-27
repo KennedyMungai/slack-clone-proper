@@ -5,6 +5,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import Profile from "@/features/members/components/profile";
 import Thread from "@/features/members/components/thread";
 import { usePanel } from "@/hooks/use-panel";
 import { LoaderIcon } from "lucide-react";
@@ -19,9 +20,9 @@ type Props = {
 };
 
 const WorkspaceLayout = ({ children }: Props) => {
-  const { onClose, parentMessageId } = usePanel();
+  const { onClose, parentMessageId, profileMemberId } = usePanel();
 
-  const showPanel = !!parentMessageId;
+  const showPanel = !!parentMessageId || !!profileMemberId;
 
   return (
     <div className="h-full">
@@ -51,6 +52,11 @@ const WorkspaceLayout = ({ children }: Props) => {
                 {parentMessageId ? (
                   <Thread
                     messageId={parentMessageId as Id<"messages">}
+                    onClose={onClose}
+                  />
+                ) : profileMemberId ? (
+                  <Profile
+                    memberId={profileMemberId as Id<"members">}
                     onClose={onClose}
                   />
                 ) : (
