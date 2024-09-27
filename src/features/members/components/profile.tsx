@@ -136,6 +136,8 @@ const Profile = ({ memberId, onClose }: Props) => {
   const onUpdate = async (role: "admin" | "member") => {
     const ok = await confirmUpdate();
 
+    if (!ok) return;
+
     updateMember(
       { id: memberId, role },
       {
