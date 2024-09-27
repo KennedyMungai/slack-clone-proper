@@ -23,9 +23,11 @@ const Header = ({ onClick, memberImage, memberName }: Props) => {
           <AvatarImage src={memberImage} alt={memberName} />
           <AvatarFallback>{memberName?.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
+        <div className="ml-4 flex items-center">
+          <span className="truncate">{memberName}</span>
+          <ChevronDownIcon className="ml-2 size-2.5" />
+        </div>
       </Button>
-      <span className="truncate">{memberName}</span>
-      <ChevronDownIcon className="ml-2 size-2.5" />
     </div>
   );
 };
