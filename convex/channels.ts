@@ -140,7 +140,7 @@ export const remove = mutation({
         .collect(),
     ]);
 
-    for (const message of messages) await ctx.db.delete(message.id);
+    for (const message of messages) await ctx.db.delete(message._id);
 
     await ctx.db.delete(args.id);
 
