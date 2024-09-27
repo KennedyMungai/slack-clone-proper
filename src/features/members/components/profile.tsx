@@ -7,6 +7,7 @@ import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetMember } from "@/features/members/api/use-get-member";
 import { useRemoveMember } from "@/features/members/api/use-remove-member";
 import { useUpdateMember } from "@/features/members/api/use-update-member";
+import useConfirm from "@/hooks/use-confirm";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import {
   ChevronDownIcon,
@@ -25,6 +26,21 @@ type Props = {
 };
 
 const Profile = ({ memberId, onClose }: Props) => {
+  const [LeaveDialog, confirmLeave] = useConfirm({
+    title: "Leave workspace",
+    message: "Are you sure you want to leave this workspace?",
+  });
+
+  const [RemoveDialog, confirmRemove] = useConfirm({
+    title: "Remove member",
+    message: "Are you sure you want to remove this member?",
+  });
+
+  const [UpdateDialog, confirmUpdate] = useConfirm({
+    title: "Change role",
+    message: "Are you sure you want to change this member's role?",
+  });
+
   const workspaceId = useWorkspaceId();
 
   const { data: currentMember, isLoading: isLoadingCurrentMember } =
@@ -72,7 +88,11 @@ const Profile = ({ memberId, onClose }: Props) => {
     </div>;
   }
 
-  const onRemove = () => {
+  const onRemove = async () => {
+    const ok = await confirmRemove();
+
+    if (!ok) return;
+
     removeMember(
       { id: memberId },
       {
@@ -85,7 +105,11 @@ const Profile = ({ memberId, onClose }: Props) => {
     );
   };
 
-  const onLeave = () => {
+  const onLeave = async () => {
+    const ok = await confirmLeave();
+
+    if (!ok) return;
+
     removeMember(
       { id: memberId },
       {
@@ -98,7 +122,9 @@ const Profile = ({ memberId, onClose }: Props) => {
     );
   };
 
-  const onUpdate = (role: "admin" | "member") => {
+  const onUpdate = async (role: "admin" | "member") => {
+    const ok = await confirmUpdate();
+
     updateMember(
       { id: memberId, role },
       {
@@ -112,63 +138,68 @@ const Profile = ({ memberId, onClose }: Props) => {
   };
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex h-[49px] items-center justify-between border-b px-4">
-        <p className="text-lg font-bold">Profile</p>
-        <Button onClick={onClose} size={"iconSm"} variant={"ghost"}>
-          <XIcon className="size-5 stroke-[1.5]" />
-        </Button>
-      </div>
-      <div className="flex flex-col items-center justify-center p-4">
-        <Avatar className="size-28">
-          <AvatarImage src={member!.user.image} />
-          <AvatarFallback className="text-2xl">
-            {member!.user.name?.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
-      </div>
-      <div className="flex flex-col p-4">
-        <p className="text-xl font-bold">{member!.user.name!}</p>
-        {currentMember?.role === "admin" &&
-        currentMember._id !== member?._id ? (
-          <div className="mt-4 flex items-center gap-2">
-            <Button variant={"outline"} className="w-full capitalize">
-              {member?.role} <ChevronDownIcon className="ml-2 size-4" />
-            </Button>
-            <Button className="w-full" variant={"outline"}>
-              Remove
-            </Button>
-          </div>
-        ) : currentMember?._id === member?._id &&
-          currentMember?.role !== "admin" ? (
-          <div className="mt-4">
-            <Button variant="outline" className="w-full">
-              Leave
-            </Button>
-          </div>
-        ) : null}
-      </div>
-      <Separator />
-      <div className="flex flex-col p-4">
-        <p className="mb-4 text-sm font-bold">Contact Information</p>
-        <div className="flex items-center gap-2">
-          <div className="flex size-9 items-center justify-center rounded-md bg-muted">
-            <MailIcon className="size-4" />
-          </div>
-          <div className="flex flex-col">
-            <p className="text-[13px] font-semibold text-muted-foreground">
-              Email Address
-            </p>
-            <Link
-              href={`mailto:${member!.user.email}`}
-              className="text-sm text-[#1264a3] hover:underline"
-            >
-              {member!.user.email}
-            </Link>
+    <>
+      <div className="flex h-full flex-col">
+        <div className="flex h-[49px] items-center justify-between border-b px-4">
+          <p className="text-lg font-bold">Profile</p>
+          <Button onClick={onClose} size={"iconSm"} variant={"ghost"}>
+            <XIcon className="size-5 stroke-[1.5]" />
+          </Button>
+        </div>
+        <div className="flex flex-col items-center justify-center p-4">
+          <Avatar className="size-28">
+            <AvatarImage src={member!.user.image} />
+            <AvatarFallback className="text-2xl">
+              {member!.user.name?.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+        </div>
+        <div className="flex flex-col p-4">
+          <p className="text-xl font-bold">{member!.user.name!}</p>
+          {currentMember?.role === "admin" &&
+          currentMember._id !== member?._id ? (
+            <div className="mt-4 flex items-center gap-2">
+              <Button variant={"outline"} className="w-full capitalize">
+                {member?.role} <ChevronDownIcon className="ml-2 size-4" />
+              </Button>
+              <Button className="w-full" variant={"outline"}>
+                Remove
+              </Button>
+            </div>
+          ) : currentMember?._id === member?._id &&
+            currentMember?.role !== "admin" ? (
+            <div className="mt-4">
+              <Button variant="outline" className="w-full">
+                Leave
+              </Button>
+            </div>
+          ) : null}
+        </div>
+        <Separator />
+        <div className="flex flex-col p-4">
+          <p className="mb-4 text-sm font-bold">Contact Information</p>
+          <div className="flex items-center gap-2">
+            <div className="flex size-9 items-center justify-center rounded-md bg-muted">
+              <MailIcon className="size-4" />
+            </div>
+            <div className="flex flex-col">
+              <p className="text-[13px] font-semibold text-muted-foreground">
+                Email Address
+              </p>
+              <Link
+                href={`mailto:${member!.user.email}`}
+                className="text-sm text-[#1264a3] hover:underline"
+              >
+                {member!.user.email}
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <UpdateDialog />
+      <RemoveDialog />
+      <LeaveDialog />
+    </>
   );
 };
 
