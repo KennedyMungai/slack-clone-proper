@@ -133,7 +133,14 @@ export const remove = mutation({
 
     if (!member || member.role !== "admin") throw new Error("Unauthorized");
 
-    // TODO: Remove associated messages
+    const [messages] = await Promise.all([
+      ctx.db
+        .query("messages")
+        .filter((q) => q.eq(q.field("channelId"), args.id))
+        .collect(),
+    ]);
+
+    for (const message of messages) await ctx.db.delete(message.id);
 
     await ctx.db.delete(args.id);
 
