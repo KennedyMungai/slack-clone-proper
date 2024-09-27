@@ -3,7 +3,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetMember } from "@/features/members/api/use-get-member";
+import { useRemoveMember } from "@/features/members/api/use-remove-member";
+import { useUpdateMember } from "@/features/members/api/use-update-member";
+import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { LoaderIcon, MailIcon, TriangleAlertIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 import { Id } from "../../../../convex/_generated/dataModel";
@@ -14,11 +18,23 @@ type Props = {
 };
 
 const Profile = ({ memberId, onClose }: Props) => {
+  const workspaceId = useWorkspaceId();
+
+  const { data: currentMember, isLoading: isLoadingCurrentMember } =
+    useCurrentMember({
+      workspaceId,
+    });
+
   const { data: member, isLoading: isLoadingMember } = useGetMember({
     id: memberId,
   });
 
-  if (isLoadingMember) {
+  const { mutate: updateMember, isPending: isUpdatingMember } =
+    useUpdateMember();
+  const { mutate: removeMember, isPending: isRemovingMember } =
+    useRemoveMember();
+
+  if (isLoadingMember || isLoadingCurrentMember) {
     return (
       <div className="flex h-full flex-col">
         <div className="flex h-[49px] items-center justify-between border-b px-4">
