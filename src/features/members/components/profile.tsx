@@ -1,10 +1,10 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useGetMember } from "@/features/members/api/use-get-member";
 import { LoaderIcon, TriangleAlertIcon, XIcon } from "lucide-react";
 import { Id } from "../../../../convex/_generated/dataModel";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type Props = {
   memberId: Id<"members">;
