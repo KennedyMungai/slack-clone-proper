@@ -58,7 +58,7 @@ const Profile = ({ memberId, onClose }: Props) => {
       <div className="flex flex-col items-center justify-center p-4">
         <Avatar className="size-28">
           <AvatarImage src={member!.user.image} />
-          <AvatarFallback>
+          <AvatarFallback className="text-2xl">
             {member!.user.name?.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
