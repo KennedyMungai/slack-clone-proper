@@ -8,7 +8,13 @@ import { useGetMember } from "@/features/members/api/use-get-member";
 import { useRemoveMember } from "@/features/members/api/use-remove-member";
 import { useUpdateMember } from "@/features/members/api/use-update-member";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { LoaderIcon, MailIcon, TriangleAlertIcon, XIcon } from "lucide-react";
+import {
+  ChevronDownIcon,
+  LoaderIcon,
+  MailIcon,
+  TriangleAlertIcon,
+  XIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { Id } from "../../../../convex/_generated/dataModel";
 
@@ -83,6 +89,17 @@ const Profile = ({ memberId, onClose }: Props) => {
       </div>
       <div className="flex flex-col p-4">
         <p className="text-xl font-bold">{member!.user.name!}</p>
+        {currentMember?.role === "admin" &&
+        currentMember._id === member?._id ? (
+          <div className="mt-4 flex items-center gap-2">
+            <Button variant={"outline"} className="w-full capitalize">
+              {member.role} <ChevronDownIcon className="ml-2 size-4" />
+            </Button>
+            <Button className="w-full" variant={"outline"}>
+              Remove
+            </Button>
+          </div>
+        ) : null}
       </div>
       <Separator />
       <div className="flex flex-col p-4">
