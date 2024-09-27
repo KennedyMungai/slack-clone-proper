@@ -162,7 +162,7 @@ const Profile = ({ memberId, onClose }: Props) => {
               <Button
                 variant={"outline"}
                 className="w-full capitalize"
-                onClick={onUpdate}
+                onClick={() => {}}
               >
                 {member?.role} <ChevronDownIcon className="ml-2 size-4" />
               </Button>
