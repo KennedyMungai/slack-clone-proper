@@ -56,7 +56,7 @@ const Profile = ({ memberId, onClose }: Props) => {
         </Button>
       </div>
       <div className="flex flex-col items-center justify-center p-4">
-        <Avatar className="size-20">
+        <Avatar className="size-28">
           <AvatarImage src={member!.user.image} />
           <AvatarFallback>
             {member!.user.name?.charAt(0).toUpperCase()}
