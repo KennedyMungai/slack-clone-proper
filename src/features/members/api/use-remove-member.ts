@@ -15,7 +15,7 @@ type Options = {
   throwError?: boolean;
 };
 
-export const useUpdateUser = () => {
+export const useRemoveMember = () => {
   const mutation = useMutation(api.members.remove);
 
   const [data, setData] = useState<ResponseType>(null);
