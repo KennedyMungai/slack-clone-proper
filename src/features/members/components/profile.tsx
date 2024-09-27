@@ -159,17 +159,21 @@ const Profile = ({ memberId, onClose }: Props) => {
           {currentMember?.role === "admin" &&
           currentMember._id !== member?._id ? (
             <div className="mt-4 flex items-center gap-2">
-              <Button variant={"outline"} className="w-full capitalize">
+              <Button
+                variant={"outline"}
+                className="w-full capitalize"
+                onClick={onUpdate}
+              >
                 {member?.role} <ChevronDownIcon className="ml-2 size-4" />
               </Button>
-              <Button className="w-full" variant={"outline"}>
+              <Button className="w-full" variant={"outline"} onClick={onRemove}>
                 Remove
               </Button>
             </div>
           ) : currentMember?._id === member?._id &&
             currentMember?.role !== "admin" ? (
             <div className="mt-4">
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full" onClick={onLeave}>
                 Leave
               </Button>
             </div>
