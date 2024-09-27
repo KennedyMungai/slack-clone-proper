@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useGetMember } from "@/features/members/api/use-get-member";
 import { LoaderIcon, MailIcon, TriangleAlertIcon, XIcon } from "lucide-react";
-import { Id } from "../../../../convex/_generated/dataModel";
 import Link from "next/link";
+import { Id } from "../../../../convex/_generated/dataModel";
 
 type Props = {
   memberId: Id<"members">;
