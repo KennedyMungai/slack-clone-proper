@@ -243,6 +243,7 @@ const Message = ({
                 count={threadCount}
                 image={threadImage}
                 timestamp={threadTimestamp}
+                name={threadName}
                 onClick={() => onOpenMessage(id)}
               />
             </div>

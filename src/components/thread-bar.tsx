@@ -8,10 +8,17 @@ type Props = {
   count?: number;
   image?: string;
   timestamp?: number;
+  name?: string;
   onClick: () => void;
 };
 
-const ThreadBar = ({ count, timestamp, image, onClick }: Props) => {
+const ThreadBar = ({
+  count,
+  timestamp,
+  image,
+  onClick,
+  name = "Member",
+}: Props) => {
   if (!count || !timestamp) return null;
 
   return (
@@ -22,7 +29,7 @@ const ThreadBar = ({ count, timestamp, image, onClick }: Props) => {
       <div className="flex items-center gap-2 overflow-hidden">
         <Avatar className="shrink-0">
           <AvatarImage src={image} />
-          <AvatarFallback>M</AvatarFallback>
+          <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
         </Avatar>
         <span className="truncate text-xs font-bold text-sky-700 hover:underline">
           {count} {count > 1 ? "replies" : "reply"}
